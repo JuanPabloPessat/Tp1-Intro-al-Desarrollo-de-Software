@@ -1,8 +1,8 @@
-from flask import Flask, request, jsonify
-from models import db 
+from flask import Flask, jsonify, request, render_template, redirect,
+from db.models import db 
 from flask_cors import CORS
 import json
-from models import Producto, Usuario, Carrito
+from db.models import Producto, Usuario, Carrito
 
 
 app = Flask(__name__)
@@ -49,22 +49,62 @@ def obtener_producto_Id(id_producto):
 	except Exception as error:
 		print('Error', error)
 		return jsonify({'message': 'Internal server error'}), 500
+	
+@app.route('/usuario/inicio-sesion', methods = ['GET','POST'])
+def login():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        contraseña = request.form['contraseña']
+
+        usuario = Usuario.query.filter_by(nombre=nombre).first()
+
+        if usuario and usuario.contraseña == contraseña:
+            #session['nombre'] = usuario.nombre ver session de flask
+            return redirect('/productos')
+        else:
+            return render_template('login.html',error='Usuario incorrecto')
+    
+    return render_template('login.html')
 
 
-@app.route('/usuario/<id_usuario>', methods=['GET'])
-def obtener_usuario(id_usuario):
-	try:
-		usuario = Usuario.query.where(Usuario.id == id_usuario).first()
-		usuario_data = {
-			'id': usuario.id,
-			'nombre': usuario.nombre,
-			'contraseña': usuario.contraseña,
-			'id_carrito': usuario.id_carrito
-		}
-		return usuario_data
-	except Exception as error:
-		print('Error', error)
-		return jsonify({'message': 'Internal server error'}), 500
+@app.route('/usuario/registrarse', methods = ['GET','POST'])
+def registrarse():
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        contraseña = request.form['contraseña']
+
+        if nombre == '' or contraseña == '':
+            return render_template('registro.html',error='Nombre o Contraseña invalidos')
+
+        nuevo_usuario = Usuario(nombre=nombre,contraseña=contraseña)
+        db.session.add(nuevo_usuario)
+        db.session.commit()
+
+        return redirect('/usuario/inicio-sesion') 
+    return render_template('registro.html')
+
+
+# @app.route('/usuario/<id_usuario>', methods=['GET'])
+# def obtener_usuario(id_usuario):
+# 	try:
+# 		usuario = Usuario.query.where(Usuario.id == id_usuario).first()
+# 		usuario_data = {
+# 			'id': usuario.id,
+# 			'nombre': usuario.nombre,
+# 			'contraseña': usuario.contraseña,
+# 			'id_carrito': usuario.id_carrito
+# 		}
+# 		return usuario_data
+# 	except Exception as error:
+# 		print('Error', error)
+# 		return jsonify({'message': 'Internal server error'}), 500
+
+
+@app.route('/carrito')
+def carrito():
+    return
+
+
 
 
 with app.app_context():
