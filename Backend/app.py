@@ -10,90 +10,90 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:postgres
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 @app.route('/products', methods=['GET'])
-def obtener_productos():
+def get_products():
     try:
-        productos = Producto.query.all()
-        productos_data = []
-        for producto in productos:
-            data_producto = {
-                'product_id': producto.product_id,
-                'name': producto.name,
-                'image': producto.image,
-                'price': producto.price,
-                'stock': producto.stock
+        products = Product.query.all()
+        products_data = []
+        for product in products:
+            data_product = {
+                'product_id': product.product_id,
+                'name': product.name,
+                'image': product.image,
+                'price': product.price,
+                'stock': product.stock
             }
-            productos_data.append(data_producto)
-        return jsonify(productos_data), 200
+            products_data.append(data_product)
+        return jsonify(products_data), 200
     except Exception as error:
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
 
 @app.route('/products/<products_id>', methods=['GET'])
-def obtener_producto_Id(products_id):
+def get_product_Id(products_id):
     try:
-        producto = Producto.query.where(Product.product_id == products_id).first()
-        data_producto = {
-            'product_id': producto.product_id,
-            'name': producto.name,
-            'image': producto.image,
-            'price': producto.price,
-            'stock': producto.stock
+        product = Product.query.where(Product.product_id == products_id).first()
+        data_product = {
+            'product_id': product.product_id,
+            'name': product.name,
+            'image': product.image,
+            'price': product.price,
+            'stock': product.stock
         }
-        return jsonify(data_producto), 200
+        return jsonify(data_product), 200
     except Exception as error:
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
 
-@app.route('/usuario/inicio-sesion', methods=['GET', 'POST'])
+@app.route('/user/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        nombre = request.form['nombre']
-        contraseña = request.form['contraseña']
+        name = request.form['name']
+        password = request.form['password']
 
-        usuario = Usuario.query.filter_by(nombre=nombre).first()
+        user = User.query.filter_by(nombre=name).first()
 
-        if usuario and usuario.contraseña == contraseña:
-            # session['nombre'] = usuario.nombre ver session de flask
-            return redirect('/productos')
+        if user and user.password == password:
+            # session['name'] = usuario.nombre ver session de flask
+            return redirect('/products')
         else:
             return render_template('login.html', error='Usuario incorrecto')
 
     return render_template('login.html')
 
-@app.route('/usuario/registrarse', methods=['GET', 'POST'])
-def registrarse():
+@app.route('/user/register', methods=['GET', 'POST'])
+def register():
     if request.method == 'POST':
-        nombre = request.form['nombre']
-        contraseña = request.form['contraseña']
+        name = request.form['name']
+        password = request.form['password']
 
-        if nombre == '' or contraseña == '':
-            return render_template('registro.html', error='Nombre o Contraseña invalidos')
+        if name == '' or password == '':
+            return render_template('register.html', error='Nombre o Contraseña invalidos')
 
-        nuevo_usuario = Usuario(nombre=nombre, contraseña=contraseña)
-        db.session.add(nuevo_usuario)
+        new_user = User(name=name, password=password)
+        db.session.add(new_user)
         db.session.commit()
 
-        return redirect('/usuario/inicio-sesion')
+        return redirect('/user/login')
     
     return render_template('registro.html')
 
-@app.route('/usuario/<id_usuario>', methods=['GET'])
-def obtener_usuario(id_usuario):
+@app.route('/user/<user_id>', methods=['GET'])
+def get_user(user_id):
     try:
-        usuario = Usuario.query.where(Usuario.id == id_usuario).first()
-        usuario_data = {
-            'id': usuario.id,
-            'name': usuario.name,
-            'password': usuario.password,
-            'cart_id': usuario.cart_id
+        user = User.query.where(User.id == user_id).first()
+        user_data = {
+            'id': user.id,
+            'name': user.name,
+            'password': user.password,
+            'cart_id': user.cart_id
         }
-        return jsonify(usuario_data), 200
+        return jsonify(user_data), 200
     except Exception as error:
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
 
-@app.route('/carrito')
-def carrito():
+@app.route('/cart')
+def cart():
     return
 
 with app.app_context():
