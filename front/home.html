@@ -6,6 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<title>Local</title>
 		<link rel="stylesheet" href="home.css" />
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	</head>
 	<body>
 		<header>
@@ -95,7 +97,7 @@
 				</div>
 			</section>
 
-			<section class="container top-categories">
+			<section class="container top-categories" id = "Cafes a la venta">
 				<h1 class="heading-1">Mejores Categorías</h1>
 				<div class="container-categories">
 					<div class="card-category category-moca">
@@ -113,10 +115,19 @@
 				</div>
 			</section>
 
+
+			<!-- ASI ESTA AHORA (Si ves todo esto horrible no te asustes ya lo voy a corregir, tambièn desaparecieron las estrellas de los productos, eso lo voy a tener que dejar así) -->
 			<section class="container top-products">
-				<h1 class="heading-1">Mejores Productos</h1>
-				<div class="container-products">
-					<!-- Producto 1 -->
+				<h1 class="heading-1">En venta</h1>
+				<div class="container-products" id = "container productos en venta">
+				</div>
+			</section>
+
+			<!-- ASI ESTABAN ANTES
+			<section class="container top-products">
+				<h1 class="heading-1">En venta</h1>
+				<div class="container-products" id = "container productos en venta">
+					
 					<div class="card-product">
 						<div class="container-img">
 							<img src="img/cafe-irish.jpg" alt="Cafe Irish" />
@@ -148,7 +159,7 @@
 							<p class="price">$4.60 <span>$5.30</span></p>
 						</div>
 					</div>
-					<!-- Producto 2 -->
+					
 					<div class="card-product">
 						<div class="container-img">
 							<img
@@ -183,7 +194,7 @@
 							<p class="price">$5.70 <span>$7.30</span></p>
 						</div>
 					</div>
-					<!--  -->
+					
 					<div class="card-product">
 						<div class="container-img">
 							<img
@@ -217,7 +228,7 @@
 							<p class="price">$3.20</p>
 						</div>
 					</div>
-					<!--  -->
+					
 					<div class="card-product">
 						<div class="container-img">
 							<img src="img/cafe-helado.jpg" alt="Cafe Helado" />
@@ -250,6 +261,15 @@
 					</div>
 				</div>
 			</section>
+			-->
+
+
+
+
+
+
+
+
 
 			<section class="gallery">
 				<img
@@ -450,9 +470,105 @@
 				</div>
 			</div>
 		</footer>
+		
+
+
 		<script
 			src="https://kit.fontawesome.com/81581fb069.js"
 			crossorigin="anonymous"
 		></script>
+
+
+		<script>
+         
+        function response_received(response) {
+            	return response.json()
+        	}
+
+        	function parse_data(content) {
+            	console.log("TENGO LA LISTA DE PERSONAJES!")
+            	console.log(content)
+
+	            let container = document.getElementById('container productos en venta')
+	            
+	            for (let index = 0; index < content.length; index++) {
+	                let porduct_card = document.createElement("div");
+	                porduct_card.setAttribute("class", "card-product");
+	  
+
+	                let item = document.createElement("div");
+	                item.setAttribute("class", "container-img");
+
+	                let imagen = document.createElement("img");
+	                imagen.setAttribute("src", content[index].image);
+
+	                let botones_auxiliares = document.createElement("div");
+	               	botones_auxiliares.setAttribute("class", "button-group");
+
+	               	let boton_ver = document.createElement("span");
+	               	let ojo = document.createElement("i");
+	               	ojo.setAttribute("class", "fa-regular fa-eye");
+	               	boton_ver.append(ojo);
+	               	botones_auxiliares.append(boton_ver);
+
+	               	let boton_like = document.createElement("span");
+	               	let corazon = document.createElement("i");
+	               	corazon.setAttribute("class", "fa-regular fa-heart");
+	               	boton_ver.append(corazon);
+	               	botones_auxiliares.append(boton_like);
+
+	               	let boton_compartir = document.createElement("span");
+	               	let compartir = document.createElement("i");
+	               	compartir.setAttribute("class", "fa-regular fa-code-compare");
+	               	boton_ver.append(compartir);
+	               	botones_auxiliares.append(boton_compartir);
+
+	               	item.append(imagen)
+	               	item.append(botones_auxiliares)	            
+	                porduct_card.append(item)
+
+
+
+	                let contenido = document.createElement("div");
+	                contenido.setAttribute("class", "content-card-product");
+
+	                let nombre = document.createElement("h3");
+	                nombre.innerText = content[index].name;
+
+	                let boton_compra = document.createElement("span");
+	                carrito = document.createElement("i");
+	                carrito.setAttribute("class", "fa-solid fa-basket-shopping");
+	                boton_compra.append(carrito);
+
+	                let precio = document.createElement("p");
+	                precio.setAttribute("class", "price");
+	                precio.innerText = `$${content[index].price}`
+
+	                contenido.append(nombre);
+	                contenido.append(boton_compra);
+	                contenido.append(precio);
+
+	                porduct_card.append(contenido)
+
+
+
+	                container.append(porduct_card);
+	            }
+            }
+
+            function request_error(error) {
+            	console.log("ERROR")
+           		console.log(error);
+        	}
+
+
+			fetch("http://localhost:5000/products")
+			.then(response_received)
+			.then(parse_data)
+			.catch(request_error)
+
+     </script>
+
+
 	</body>
 </html>
