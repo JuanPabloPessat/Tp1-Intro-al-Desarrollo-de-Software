@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrito</title>
+  <link rel="stylesheet" href="carrito.css" />
+</head>
+
+<body>
+  <!--soperte tecnico-->
+  <header>
+    <div class="container-hero">
+      <div class="container hero">
+        <div class="customer-support">
+          <i class="fa-solid fa-headset"></i>
+          <div class="content-customer-support">
+            <span class="text">Soporte al cliente</span>
+            <span class="number">011 1234-5678</span>
+          </div>
+        </div>
+        <!--NOmbre del local-->
+        <div class="container-logo">
+          <i class="fa-solid fa-mug-hot"></i>
+          <h1 class="logo"><a href="/">Nombre</a></h1>
+        </div>
+      </div>
+    </div>
+    <div class="container-cart-products hidden-cart">
+      <div class="row-product hidden">
+        <div class="cart-product">
+          <div class="info-cart-product">
+            <span class="cantidad-producto-carrito">1</span>
+            <p class="titulo-producto-carrito"> Cafecito</p>
+            <span class="precio-producto-carrito">$80</span>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="icon-close">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="cart-total hidden">
+        <h3>Total:</h3>
+        <span class="total-pagar">$80</span>
+      </div>
+      <p class="cart-empty">El carrito está vacío</p>
+    </div>
+    <!--NAVBAR-->
+    <div class="container-navbar">
+      <nav class="navbar container">
+        <i class="fa-solid fa-bars"></i>
+        <ul class="menu">
+          <li><a href="#">Inicio</a></li>
+          <li><a href="#">Productos</a></li>
+          <li><a href="#">Locales</a></li>
+        </ul>
+
+        <form class="search-form">
+          <input type="search" placeholder="Buscar..." />
+          <button class="btn-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+      </nav>
+    </div>
+  </header>
+  <article class="carrito">
+    <div class="container-info">
+      <h2 class="text-3xl font-bold mb-8">TU CARRITO</h2>
+      <p class="text-sm text-muted-foreground">Revisa los productos que has agregado a tu carrito.</p>
+      <hr>
+    </div>
+    <div class="container-products">
+      <hr>
+    </div>
+    <div class="total">
+        <p id="total">TOTAL:</p>
+        <p id="precio">$...</p>
+    </div>
+    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full">
+      Finalizar Compra
+    </button>
+  </article>
+  <footer class="footer">
+    <div class="container container-footer">
+      <div class="menu-footer">
+        <div class="contact-info">
+          <p class="title-footer">Información de Contacto</p>
+          <ul>
+            <li>Teléfono: 123-456-7890</li>
+            <li>Email: baristas@support.com</li>
+          </ul>
+          <div class="social-icons">
+            <span class="facebook">
+              <i class="fa-brands fa-facebook-f"></i>
+            </span>
+            <span class="twitter">
+              <i class="fa-brands fa-twitter"></i>
+            </span>
+            <span class="youtube">
+              <i class="fa-brands fa-youtube"></i>
+            </span>
+            <span class="pinterest">
+              <i class="fa-brands fa-pinterest-p"></i>
+            </span>
+            <span class="instagram">
+              <i class="fa-brands fa-instagram"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>
+          Desarrollado por Alumnos de FIUBA
+        </p>
+        <img src="img/payment.png" alt="Pagos">
+      </div>
+    </div>
+  </footer>
+  <script src="https://kit.fontawesome.com/81581fb069.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
