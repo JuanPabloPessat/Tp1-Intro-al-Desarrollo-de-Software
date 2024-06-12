@@ -50,17 +50,17 @@ def obtener_producto_Id(id_producto):
 		print('Error', error)
 		return jsonify({'message': 'Internal server error'}), 500
 	
-@app.route('/usuario/inicio-sesion', methods = ['GET','POST'])
+@app.route('/user/login', methods = ['GET','POST'])
 def login():
     if request.method == 'POST':
-        nombre = request.form['nombre']
-        contraseña = request.form['contraseña']
+        name = request.form['name']
+        password = request.form['password']
 
-        usuario = Usuario.query.filter_by(nombre=nombre).first()
+        user = Usuario.query.filter_by(nombre=name).first()
 
-        if usuario and usuario.contraseña == contraseña:
+        if user and user.contraseña == password:
             #session['nombre'] = usuario.nombre ver session de flask
-            return redirect('/productos')
+            return redirect('/products')
         else:
             return render_template('login.html',error='Usuario incorrecto')
     
