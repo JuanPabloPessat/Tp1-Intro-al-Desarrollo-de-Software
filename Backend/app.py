@@ -44,7 +44,7 @@ def get_product_Id(products_id):
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
 
-@app.route('/user/login', methods=['GET', 'POST'])
+@app.route('/user/login', methods=['GET', 'POST']) # Todavia no terminado
 def login():
     if request.method == 'POST':
         name = request.form['name']
@@ -60,22 +60,23 @@ def login():
 
     return render_template('login.html')
 
-@app.route('/user/register', methods=['GET', 'POST'])
+@app.route('/user/register', methods = ['GET','POST'])
 def register():
+    
     if request.method == 'POST':
-        name = request.form['name']
-        password = request.form['password']
+        name = request.json.get("name")
+        password = request.json.get("password")
 
         if name == '' or password == '':
-            return render_template('register.html', error='Nombre o Contraseña invalidos')
+            return jsonify({"success": False, "message": "Nombre o contraseña inválidos"}), 400
+        elif not name or not password:
+            return jsonify({"success": False, "message": "Nombre o contraseña inválidos"}), 400
 
-        new_user = User(name=name, password=password)
+        new_user = User(name=name,password=password)
         db.session.add(new_user)
         db.session.commit()
 
-        return redirect('/user/login')
-    
-    return render_template('registro.html')
+        return jsonify({"success": True}), 200
 
 @app.route('/user/<user_id>', methods=['GET'])
 def get_user(user_id):
