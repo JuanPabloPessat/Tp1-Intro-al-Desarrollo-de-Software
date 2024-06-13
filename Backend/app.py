@@ -64,15 +64,33 @@ def login():
 def register():
     
     if request.method == 'POST':
+        
+        ultimo_usuario = User.query.order_by(User.id.desc()).first()
+        if ultimo_usuario is not None:
+            cart_id = ultimo_usuario.id + 1
+        else:
+            cart_id = 1
+
         name = request.json.get("name")
         password = request.json.get("password")
+
+        users = User.query.all()
+        users_name = []
+        for user in users:
+            users_name.append(user.name)
 
         if name == '' or password == '':
             return jsonify({"success": False, "message": "Nombre o contraseña inválidos"}), 400
         elif not name or not password:
             return jsonify({"success": False, "message": "Nombre o contraseña inválidos"}), 400
+        elif name in users_name:
+            return jsonify({"success": False, "message": "Ese nombre ya se encuentra registrado"}), 400
 
-        new_user = User(name=name,password=password)
+        new_cart = Cart(cart_id=cart_id)
+        db.session.add(new_cart)
+        db.session.commit()
+
+        new_user = User(name=name,password=password, cart_id=cart_id)
         db.session.add(new_user)
         db.session.commit()
 
