@@ -23,14 +23,6 @@
                     <h1 class="logo"><a href="/">Nombre</a></h1>
                 </div>
 
-                <div class="container-user">
-                    <i class="fa-solid fa-user"></i>
-                    <i class="fa-solid fa-basket-shopping"></i>
-                    <div class="content-shopping-cart">
-                        <span class="text">Carrito</span>
-                        <span class="number">(0)</span>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -52,22 +44,31 @@
             </nav>
         </div>
     </header> 
-    <div>
+    <div class="container-form">
         <form class="login" id="form" action="/user/login" method="POST" onsubmit="form_send(event)">
+            <h2 >INICIAR SESIÓN</h2>
+            <hr>
+
             <div class="form-group">
-                <h2 >Iniciar sesión</h2>
               <label  for="user"  class="form-label"> Usuario:</label>
               <br>
               <input type="user" class="form-control" id="name" aria-describedby="emailHelp" name="name">
             </div>
+
             <div class="form-group">
               <label for="exampleInputPassword1" class="form-label">Contraseña:</label>
               <br>
               <input type="password" class="form-control" id="pwd" name="password">
               <div id="passwordHelp" class="form-text">No compartas esta información con nadie.</div>
             </div>
-            <button type="submit" class="btn-dark">Iniciar Sesión</button>
-            <a href="/user/register" class="btn-dark">Registrarse</a>
+            
+            <a href="/user/register" class="registro">¿Aún no tienes cuenta? Regístrate!</a>
+            <button 
+                type="submit"
+                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full">
+                Iniciar sesión
+            </button>
+            
         </form>
     </div>
     <footer class="footer">
@@ -106,10 +107,7 @@
             </div>
         </div>
     </footer>
-    <script
-			src="https://kit.fontawesome.com/81581fb069.js"
-			crossorigin="anonymous"
-		></script>
+    <script src="https://kit.fontawesome.com/81581fb069.js" crossorigin="anonymous"></script>
     <script>
         function form_send(event) {
                 event.preventDefault();

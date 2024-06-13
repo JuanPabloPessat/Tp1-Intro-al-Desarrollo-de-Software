@@ -10,10 +10,17 @@ html{
 	height: 100%;
 	width: 100%;
 	position: relative;  
-  font-size: 62.5%;
+    font-size: 62.5%;
 	font-family: 'Poppins', sans-serif;
-  background-color: #f9f5f0;
+    background-color: #f9f5f0;
 }
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
 
 /* ********************************** */
 /*             UTILIDADES             */
@@ -46,12 +53,12 @@ html{
 .customer-support {
 	display: flex;
 	align-items: center;
-	gap: 3rem;
-  font-size: 10px;
+	gap: 2rem;
+    font-size: 10px;
 }
 
 .customer-support i {
-	font-size: 4rem;
+	font-size: 3.3rem;
 }
 
 .content-customer-support {
@@ -206,25 +213,103 @@ html{
 /* ********************************** */
 /*              LOGIN                 */
 /* ********************************** */
-.login {
-  width: 600px;
-  border: 1px solid #E1E1E1;
-  border-radius: 6px;
-  padding: 15px;
-  font-size: 400%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  margin-bottom: 20px;
-  box-shadow: black;
+/* Estilos del contenedor del formulario */
+.container-form {
+	max-width: 500px;
+	margin: 50px auto;
+	padding: 30px;
+	background-color: #f7f7f7;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
 }
 
+/* Estilos del formulario */
+.login {
+	display: flex;
+	flex-direction: column;
+	display: block;
+	width: 100%;
+	appearance: none;
+	background-clip: padding-box;
+}
 
+h2 {
+	text-align: left;
+	margin-bottom: 8px;
+	margin-top: 0;
+	color: #333;
+	font-size: 24px;
+	font-weight: bold;
+}
+  
+.login hr{
+	border: none;
+	height: 1px;
+	background-color: #e0e0e0;
+	margin-bottom: 20px;
+}
 
-.form-label{
-  font-size: medium;
+/* Estilos de los grupos de formulario */
+.form-group {
+	margin-bottom: 15px;
+	margin-top: 15px;
+}
+  
+label {
+	color: black;
+	font-size:medium ;
+}
+  
+input[type="user"],
+input[type="password"] {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 25px;
+	font-family: 'Arial', sans-serif;
+	color: #333;
+	justify-content: center;
+	width: 100%;
+}
+  
+input[type="user"]:focus,
+input[type="password"]:focus{
+	border-color: #007BFF;
+	outline: none;
+} 
+  
+/* Estilos del botón */
+button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	white-space: nowrap;
+	border-radius: 4px;
+	font-size: 14px;
+	font-weight: medium;
+	transition: background-color 0.3s ease;
+	padding: 10px 15px;
+	width: 100%;
+	border: none;
+	cursor: pointer;
+}
+	
+button:focus-visible {
+	outline: none;
+}
+	
+button:disabled {
+	pointer-events: none;
+	opacity: 0.5;
+}
+	
+button.bg-primary {
+	background-color:black;
+	color: #fff;
+}
+	
+button.bg-primary:hover {
+	background-color: rgb(56, 54, 54);
 }
 
 .form-text{
@@ -232,21 +317,10 @@ html{
   color: grey;
 }
 
-.form-control{
-  font-size: x-large;
-}
-
-.btn-dark{
-  font-size: large;
-  border-radius: 4px;
-  background-color: #000;
-  color: white;
-
-}
-@media (max-width: 400px){
-  .login{
-    width: 90%;
-  }
+.registro{
+	font-size: 12px;
+	float:right;
+	padding: 5px;
 }
 
 /* ********************************** */
@@ -255,10 +329,6 @@ html{
 
 .footer {
 	background-color: var(--primary-color);
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 300px;
 }
 
 .container-footer {
