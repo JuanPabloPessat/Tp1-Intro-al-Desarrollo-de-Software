@@ -44,19 +44,19 @@ def get_product_Id(products_id):
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
 
-@app.route('/user/login', methods=['GET', 'POST']) # Todavia no terminado
+@app.route('/user/login', methods=['GET', 'POST']) # Falta ir al home ya logueado, por ahora va al home pero sin loguear
 def login():
     if request.method == 'POST':
-        name = request.form['name']
-        password = request.form['password']
+        name = request.json.get("name")
+        password = request.json.get("password")
 
-        user = User.query.filter_by(nombre=name).first()
+        user = User.query.filter_by(name=name).first()
 
         if user and user.password == password:
-            # session['name'] = usuario.nombre ver session de flask
-            return redirect('/products')
+            #session['nombre'] = usuario.nombre ver session de flask
+            return jsonify({"success": True}), 200
         else:
-            return render_template('login.html', error='Usuario incorrecto')
+            return jsonify({"success": False, "message": "Nombre o contraseña inválidos"}), 400
 
     return render_template('login.html')
 

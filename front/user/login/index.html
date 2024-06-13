@@ -30,7 +30,7 @@
             <nav class="navbar container">
                 <i class="fa-solid fa-bars"></i>
                 <ul class="menu">
-                    <li><a href="#">Inicio</a></li>
+                    <li><a href="/">Inicio</a></li>
                     <li><a href="#">Productos</a></li>
                     <li><a href="#">Locales</a></li>
                 </ul>
@@ -45,7 +45,7 @@
         </div>
     </header> 
     <div class="container-form">
-        <form class="login" id="form" action="/user/login" method="POST" onsubmit="form_send(event)">
+        <form class="login" id="form" method="POST" onsubmit="check_user(event)">
             <h2 >INICIAR SESIÓN</h2>
             <hr>
 
@@ -109,15 +109,36 @@
     </footer>
     <script src="https://kit.fontawesome.com/81581fb069.js" crossorigin="anonymous"></script>
     <script>
-        function form_send(event) {
-                event.preventDefault();
-            
-                document.getElementById("form").submit();
-            
-                setTimeout(function() {
-                    window.location.href = "/home";
-                }, 500);
+        function handle_response(data) {
+            if (data.success) {
+                window.location.href = `/`
+            } else {
+                alert("Error")
             }
+        }
+
+        function check_user(event) {
+            event.preventDefault()
+
+            const formData = new FormData(event.target)
+
+            const name = formData.get("name")
+            const password = formData.get("password")
+
+            fetch("http://localhost:5000/user/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: name,
+                    password : password
+                })
+            })
+                .then((res) => res.json())
+                .then(handle_response)
+                .catch((error) => console.log("ERROR", error))
+        }
     </script>
 </body>
 </html>
