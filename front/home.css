@@ -110,6 +110,8 @@ header{
 /* ************* NAVBAR ************* */
 .container-navbar {
 	background-color: var(--primary-color);
+	position: fixed; 
+    width: 100%;
 }
 
 .navbar {
