@@ -22,5 +22,8 @@ class User(db.Model):
 class Cart(db.Model):
     __tablename__ = 'Cart_table'
     cart_id = db.Column(db.Integer, primary_key=True)
+    product_name = db.Column(db.String(255), unique=True)
+    product_price = db.Column(db.Integer)
+
 
 

@@ -28,6 +28,25 @@ def get_products():
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
 
+
+@app.route('/cart/products', methods=['GET'])
+def get_cart_products():
+    try:
+        cart_products = Cart.query.all()
+        cart_products_data = []
+        for cart_product in cart_products:
+            data_product = {
+                'cart_id': cart_product.cart_id,
+                'product_name': cart_product.product_name,
+                'product_price': cart_product.product_price,
+            }
+            cart_products_data.append(data_product)
+        return jsonify(cart_products_data), 200
+    except Exception as error:
+        print('Error', error)
+        return jsonify({'message': 'Internal server error'}), 500
+
+
 @app.route('/products/<products_id>', methods=['GET'])
 def get_product_Id(products_id):
     try:
