@@ -34,6 +34,11 @@ html {
 /* ********************************** */
 /*               HEADER               */
 /* ********************************** */
+header{
+	position: fixed;
+	width: 100%;
+}
+
 .container-hero {
 	background-color: var(--background-color);
 }
