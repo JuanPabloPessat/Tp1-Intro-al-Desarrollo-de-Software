@@ -73,7 +73,7 @@ def login():
 
         if user and user.password == password:
             #session['nombre'] = usuario.nombre ver session de flask
-            return jsonify({"success": True}), 200
+            return jsonify({"success": True, "userId": user.id}), 200
         else:
             return jsonify({"success": False, "message": "Nombre o contraseña inválidos"}), 400
 
