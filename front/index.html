@@ -41,8 +41,8 @@
 				<nav class="navbar container">
 					<i class="fa-solid fa-bars"></i>
 					<ul class="menu">
-						<li><a href="#">Inicio</a></li>
-						<li><a href="#">Productos</a></li>
+						<li><a href="/">Inicio</a></li>
+						<li><a href="#productos">Productos</a></li>
 						<li><a href="#">Locales</a></li>
 					</ul>
 
@@ -216,7 +216,7 @@
 			</section>
 
 			<section class="container specials">
-				<h1 class="heading-1">En Venta</h1>
+				<h1 class="heading-1" id='productos'>En Venta</h1>
 				<div class="container-products" id = "container productos en venta">
 					<!--ACA IRIAN TODOS LOS PRODRUCTOS-->
 				</div>
@@ -331,107 +331,105 @@
 		></script>
 
 		<script>
-         
+         	
 			function response_received(response) {
-					return response.json()
+				return response.json()
+			}
+	
+			function parse_data(content) {
+				console.log("TENGO LA LISTA DE PERSONAJES!")
+				console.log(content)
+				
+				//PRODUCTOS DESTACADOS
+				let container_destacados = document.getElementById('container productos destacados');
+				for (let index = 0; index < 4; index++) {
+					let product_card = document.createElement("div");
+					product_card.setAttribute("class", "card-product");
+		  
+	
+					let item = document.createElement("div");
+					item.setAttribute("class", "container-img");
+	
+					let imagen = document.createElement("img");
+					imagen.setAttribute("src", content[index].image);	
+	
+					item.append(imagen)            
+					product_card.append(item)
+	
+	
+	
+					let contenido = document.createElement("div");
+					contenido.setAttribute("class", "content-card-product");
+	
+					let nombre = document.createElement("h3");
+					nombre.innerText = content[index].name;
+	
+					let boton_compra = document.createElement("span");
+					boton_compra.setAttribute("class", "add-cart");
+					carrito = document.createElement("i");
+					carrito.setAttribute("class", "fa-solid fa-basket-shopping");
+					boton_compra.append(carrito);
+	
+					let precio = document.createElement("p");
+					precio.setAttribute("class", "price");
+					precio.innerText = `$${content[index].price}`
+	
+					contenido.append(nombre);
+					contenido.append(boton_compra);
+					contenido.append(precio);
+	
+					product_card.append(contenido)
+	
+	
+	
+					container_destacados.append(product_card);
 				}
-	
-				function parse_data(content) {
-					console.log("TENGO LA LISTA DE PERSONAJES!")
-					console.log(content)
-					
-					//PRODUCTOS DESTACADOS
-					let container_destacados = document.getElementById('container productos destacados');
-					for (let index = 0; index < 4; index++) {
-						let porduct_card = document.createElement("div");
-						porduct_card.setAttribute("class", "card-product");
+
+
+				//PRODUCTOS EN VENTA
+				container_en_venta = document.getElementById('container productos en venta');
+				for (let index = 0; index < content.length; index++) {
+					let product_card = document.createElement("div");
+					product_card.setAttribute("class", "card-product");
 		  
 	
-						let item = document.createElement("div");
-						item.setAttribute("class", "container-img");
+					let item = document.createElement("div");
+					item.setAttribute("class", "container-img");
 	
-						let imagen = document.createElement("img");
-						imagen.setAttribute("src", content[index].image);	
+					let imagen = document.createElement("img");
+					imagen.setAttribute("src", content[index].image);	
 	
-						item.append(imagen)            
-						porduct_card.append(item)
-	
-	
-	
-						let contenido = document.createElement("div");
-						contenido.setAttribute("class", "content-card-product");
-	
-						let nombre = document.createElement("h3");
-						nombre.innerText = content[index].name;
-	
-						let boton_compra = document.createElement("span");
-						boton_compra.setAttribute("class", "add-cart")
-						carrito = document.createElement("i");
-						carrito.setAttribute("class", "fa-solid fa-basket-shopping");
-						boton_compra.append(carrito);
-	
-						let precio = document.createElement("p");
-						precio.setAttribute("class", "price");
-						precio.innerText = `$${content[index].price}`
-	
-						contenido.append(nombre);
-						contenido.append(boton_compra);
-						contenido.append(precio);
-	
-						porduct_card.append(contenido)
+					item.append(imagen)            
+					product_card.append(item)
 	
 	
 	
-						container_destacados.append(porduct_card);
+					let contenido = document.createElement("div");
+					contenido.setAttribute("class", "content-card-product");
+	
+					let nombre = document.createElement("h3");
+					nombre.innerText = content[index].name;
+	
+					let boton_compra = document.createElement("span");
+					boton_compra.setAttribute("class", "add-cart")
+					carrito = document.createElement("i");
+					carrito.setAttribute("class", "fa-solid fa-basket-shopping");
+					boton_compra.append(carrito);
+	
+					let precio = document.createElement("p");
+					precio.setAttribute("class", "price");
+					precio.innerText = `$${content[index].price}`
+	
+					contenido.append(nombre);
+					contenido.append(boton_compra);
+					contenido.append(precio);
+	
+					product_card.append(contenido)
+		
+	
+
+					container_en_venta.append(product_card);
 					}
-
-
-					//PRODUCTOS EN VENTA
-					container_en_venta = document.getElementById('container productos en venta');
-					for (let index = 0; index < content.length; index++) {
-						let porduct_card = document.createElement("div");
-						porduct_card.setAttribute("class", "card-product");
-		  
-	
-						let item = document.createElement("div");
-						item.setAttribute("class", "container-img");
-	
-						let imagen = document.createElement("img");
-						imagen.setAttribute("src", content[index].image);	
-	
-						item.append(imagen)            
-						porduct_card.append(item)
-	
-	
-	
-						let contenido = document.createElement("div");
-						contenido.setAttribute("class", "content-card-product");
-	
-						let nombre = document.createElement("h3");
-						nombre.innerText = content[index].name;
-	
-						let boton_compra = document.createElement("span");
-						boton_compra.setAttribute("class", "add-cart")
-						carrito = document.createElement("i");
-						carrito.setAttribute("class", "fa-solid fa-basket-shopping");
-						boton_compra.append(carrito);
-	
-						let precio = document.createElement("p");
-						precio.setAttribute("class", "price");
-						precio.innerText = `$${content[index].price}`
-	
-						contenido.append(nombre);
-						contenido.append(boton_compra);
-						contenido.append(precio);
-	
-						porduct_card.append(contenido)
-	
-	
-	
-						container_en_venta.append(porduct_card);
-					}
-
-
 				}
 	
 				function request_error(error) {

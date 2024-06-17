@@ -74,9 +74,9 @@
       <p class="text-sm text-muted-foreground">Revisa los productos que has agregado a tu carrito.</p>
       <hr>
     </div>
-    <div class="container-products">
-      <hr>
+    <div class="container-products" id='container productos'>
     </div>
+    <hr>
     <div class="total">
         <p id="total">TOTAL:</p>
         <p id="precio">$...</p>
@@ -122,6 +122,74 @@
     </div>
   </footer>
   <script src="https://kit.fontawesome.com/81581fb069.js" crossorigin="anonymous"></script>
+  <script>
+          
+      function response_received(response) {
+        return response.json()
+      }
+  
+      function parse_data(content) {
+        console.log("TENGO LA LISTA DE PERSONAJES!")
+        console.log(content)
+        
+
+        let container_productos = document.getElementById('container productos');
+        let precio_total = 0;
+
+        for (let index = 0; index < 4; index++) {
+          let product_card = document.createElement("div");
+          product_card.setAttribute("class", "card-product");
+      
+  
+          let item = document.createElement("div");
+          item.setAttribute("class", "container-img");
+           
+          product_card.append(item)
+  
+          let contenido = document.createElement("div");
+          contenido.setAttribute("class", "content-card-product");
+  
+          let nombre = document.createElement("p");
+          nombre.setAttribute("class", "name");
+          nombre.innerText = content[index].name;
+
+          let precio = document.createElement("p");
+          precio.setAttribute("class", "price");
+          precio.innerText = `$${content[index].price}`
+          precio_total += content[index].price;
+  
+          let boton_eliminar = document.createElement("button");
+          boton_eliminar.setAttribute("class", "remove-cart");
+          boton_eliminar.innerText = "x";
+  
+          contenido.append(nombre);
+          contenido.append(boton_eliminar);
+  
+          product_card.append(contenido);
+          product_card.append(precio);
+  
+  
+  
+          container_productos.append(product_card);
+          }
+
+          let etiqueta_precio = document.getElementById("precio");
+          etiqueta_precio.innerText = `$${precio_total}`;
+        }
+  
+        function request_error(error) {
+          console.log("ERROR")
+          console.log(error);
+        }
+  
+  
+        fetch("http://localhost:5000/cart/products")
+        .then(response_received)
+        .then(parse_data)
+        .catch(request_error)
+  
+     </script>
+
 </body>
 
 </html>

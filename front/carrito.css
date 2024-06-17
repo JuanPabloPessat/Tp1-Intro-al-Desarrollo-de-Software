@@ -100,6 +100,7 @@ html {
 	display: flex;
 	flex-direction: column;
 }
+
 .container-cart-products{
     position: absolute;
     top: 50px;
@@ -316,7 +317,7 @@ html {
   margin-bottom: 20px;
 }
 
-.container-products hr {
+.carrito hr {
   border: none;
   height: 1px;
   background-color: #e0e0e0;
@@ -375,7 +376,7 @@ button.bg-primary:hover {
 .footer {
 	background-color: var(--primary-color);
 	padding: 10px 0;
-  flex-shrink: 0;
+    flex-shrink: 0;
 }
 
 .container-footer {
@@ -530,3 +531,40 @@ button.bg-primary:hover {
 	font-weight: 400;
 	font-size: 1.6rem;
 }
+
+.content-card-product {
+	display: flex;
+}
+
+.name {
+	padding: 0;
+	margin: 0;
+	width: 30%;
+	display: flex;
+  	font-size: 18px;
+  	font-weight: bold;
+  	text-align: left;
+ 	justify-content: space-between;
+}
+
+.price {
+  	font-size: 18px;
+  	text-align: left;
+  	margin-top: 0;
+  	margin-bottom: 20px;
+ 	justify-content: space-between;
+}
+
+
+.remove-cart {
+	padding: 0;
+	margin-left: 65%;
+	font-size: 1.9rem;
+	color: black;
+	width: 0%;
+}
+
+.content-card-product button:hover{
+	color: red;
+}
+
