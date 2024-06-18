@@ -26,11 +26,11 @@
 					</div>
 
 					<div class="container-user">
-						<i class="fa-solid fa-user"></i>
-						<i class="fa-solid fa-basket-shopping"></i>
+						<i class="fa-solid fa-user" id="user-icon" onclick="redirect_login()"></i>
+						<i class="fa-solid fa-basket-shopping" onclick="redirect_cart()"></i>
 						<div class="content-shopping-cart">
-							<span class="text">Carrito</span>
-							<span class="number contador-productos">(0)</span>
+							<span class="text" onclick="redirect_cart()">Carrito</span>
+							<span class="number contador-productos" id="cart_cont">0</span>
 						</div>
 					</div>
 
@@ -331,7 +331,15 @@
 		></script>
 
 		<script>
-         	
+			
+			function redirect_cart(){
+				window.location.href = '/user/cart'
+			}
+
+			function redirect_login(){
+				window.location.href = '/user/login'
+			}
+			
 			function response_received(response) {
 				return response.json()
 			}
@@ -366,6 +374,12 @@
 	
 					let boton_compra = document.createElement("span");
 					boton_compra.setAttribute("class", "add-cart");
+					let cart_cont = document.getElementById("cart_cont");
+					boton_compra.addEventListener("click",function(){
+						let actual_cant = parseInt(cart_cont.textContent)
+						let new_cant = actual_cant + 1
+						cart_cont.textContent = new_cant
+					})
 					carrito = document.createElement("i");
 					carrito.setAttribute("class", "fa-solid fa-basket-shopping");
 					boton_compra.append(carrito);
@@ -391,59 +405,65 @@
 				for (let index = 0; index < content.length; index++) {
 					let product_card = document.createElement("div");
 					product_card.setAttribute("class", "card-product");
-		  
-	
+			
+
 					let item = document.createElement("div");
 					item.setAttribute("class", "container-img");
 	
 					let imagen = document.createElement("img");
 					imagen.setAttribute("src", content[index].image);	
-	
+		
 					item.append(imagen)            
 					product_card.append(item)
-	
-	
-	
+		
+		
+		
 					let contenido = document.createElement("div");
 					contenido.setAttribute("class", "content-card-product");
-	
+		
 					let nombre = document.createElement("h3");
 					nombre.innerText = content[index].name;
 	
 					let boton_compra = document.createElement("span");
 					boton_compra.setAttribute("class", "add-cart")
+					let cart_cont = document.getElementById("cart_cont");
+					boton_compra.addEventListener("click",function(){
+						let actual_cant = parseInt(cart_cont.textContent)
+						let new_cant = actual_cant + 1
+						cart_cont.textContent = new_cant
+					})
 					carrito = document.createElement("i");
 					carrito.setAttribute("class", "fa-solid fa-basket-shopping");
 					boton_compra.append(carrito);
-	
+		
 					let precio = document.createElement("p");
 					precio.setAttribute("class", "price");
 					precio.innerText = `$${content[index].price}`
-	
+		
 					contenido.append(nombre);
 					contenido.append(boton_compra);
 					contenido.append(precio);
-	
-					product_card.append(contenido)
 		
-	
+					product_card.append(contenido)
+			
+		
 
 					container_en_venta.append(product_card);
-					}
 				}
+			}
 	
 				function request_error(error) {
 					console.log("ERROR")
 					console.log(error);
 				}
-	
+
 	
 				fetch("http://localhost:5000/products")
 				.then(response_received)
 				.then(parse_data)
 				.catch(request_error)
 	
-		 </script>
+				</script>
 		 
 	</body>
 </html>

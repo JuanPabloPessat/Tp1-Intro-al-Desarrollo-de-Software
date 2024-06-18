@@ -111,7 +111,7 @@
     <script>
         function handle_response(data) {
             if (data.success) {
-                window.location.href = '/index.html?id=' + data.userId;
+                window.location.href = '/?id=' + data.userId;
             } else {
                 alert("Error")
             }
