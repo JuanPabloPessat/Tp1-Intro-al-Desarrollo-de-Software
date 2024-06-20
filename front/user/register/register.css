@@ -115,7 +115,8 @@ html{
 /* ************* NAVBAR ************* */
 .container-navbar {
 	background-color: var(--primary-color);
-  width: 100%;
+    width: 100%;
+	position: fixed; 
 }
 
 .navbar {
@@ -125,8 +126,37 @@ html{
 	padding: 1rem 0;
 }
 
-.navbar .fa-bars {
-	display: none;
+.menu > li {
+	float:left;
+}
+
+.sub-menu li a {
+	background-color: rgb(231, 229, 222);
+	border-radius: 10px;
+}
+
+.sub-menu li a:hover {
+	background: #c7a17b;
+	
+}
+
+.menu li ul {
+	display:none;
+	position:absolute;
+	min-width:140px;
+}
+
+.menu li:hover > ul {
+	display:block;
+}
+
+.menu li ul li {
+	position:relative;
+}
+
+.menu li ul li ul {
+	right:-140px;
+	top:0px;
 }
 
 .menu {
@@ -145,6 +175,8 @@ html{
 	font-weight: 600;
 	text-transform: uppercase;
 	position: relative;
+	padding:10px 12px;
+	display:block;
 }
 
 .menu a::after {
@@ -211,14 +243,14 @@ html{
 
 
 /* ********************************** */
-/*              LOGIN                 */
+/*           REGISTER                 */
 /* ********************************** */
 /* Estilos del contenedor del formulario */
 .container-form {
 	max-width: 500px;
-	margin: 50px auto;
+	margin: 100px auto;
 	padding: 30px;
-	background-color: #f7f7f7;
+	background-color:white;
 	border-radius: 8px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   
