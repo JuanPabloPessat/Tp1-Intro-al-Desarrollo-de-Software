@@ -6,9 +6,14 @@
 	--dark-color: #151515;
 }
 
+body,
 html {
-	font-size: 62.5%;
+	height: 100%;
+	width: 100%;
+	position: relative;  
+  	font-size: 62.5%;
 	font-family: 'Poppins', sans-serif;
+  	background-color: #f9f5f0;
 }
 
 * {
@@ -48,6 +53,7 @@ html {
 	display: flex;
 	align-items: center;
 	gap: 2rem;
+	font-size: 10px;
 }
 
 .customer-support i {
@@ -189,8 +195,37 @@ html {
 	padding: 1rem 0;
 }
 
-.navbar .fa-bars {
-	display: none;
+.menu > li {
+	float:left;
+}
+
+.sub-menu li a {
+	background-color: rgb(231, 229, 222);
+	border-radius: 10px;
+}
+
+.sub-menu li a:hover {
+	background: #c7a17b;
+	
+}
+
+.menu li ul {
+	display:none;
+	position:absolute;
+	min-width:140px;
+}
+
+.menu li:hover > ul {
+	display:block;
+}
+
+.menu li ul li {
+	position:relative;
+}
+
+.menu li ul li ul {
+	right:-140px;
+	top:0px;
 }
 
 .menu {
@@ -209,6 +244,8 @@ html {
 	font-weight: 600;
 	text-transform: uppercase;
 	position: relative;
+	padding:10px 12px;
+	display:block;
 }
 
 .menu a::after {
@@ -285,7 +322,8 @@ html {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 30px;
   max-width: 600px;
-  margin: 50px auto;
+  margin: 100px auto;
+  margin-bottom: 100px;
 }
 
 /* Estilos del contenedor de información */
@@ -375,15 +413,14 @@ button.bg-primary:hover {
 
 .footer {
 	background-color: var(--primary-color);
-	padding: 10px 0;
-    flex-shrink: 0;
+	padding-bottom: 30px
 }
 
 .container-footer {
 	display: flex;
 	flex-direction: column;
 	gap: 4rem;
-	padding: 2rem;
+	padding: 3rem;
 }
 
 .menu-footer {
