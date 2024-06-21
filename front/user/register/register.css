@@ -5,14 +5,14 @@
 	--background-color: #f9f5f0;
 	--dark-color: #151515;
 }
-body, 
-html{
-	height: 100%;
-	width: 100%;
-	position: relative;  
+
+html{ 
     font-size: 62.5%;
 	font-family: 'Poppins', sans-serif;
-    background-color: #f9f5f0;
+}
+
+body{
+	background-color: #f9f5f0;
 }
 
 * {
@@ -20,7 +20,6 @@ html{
 	padding: 0;
 	box-sizing: border-box;
 }
-
 
 /* ********************************** */
 /*             UTILIDADES             */
@@ -41,6 +40,12 @@ html{
 /* ********************************** */
 .container-hero {
 	background-color: var(--background-color);
+}
+
+#titulo{
+	position: fixed;
+	width: 100%;
+	top: 0;
 }
 
 .hero {
@@ -248,12 +253,12 @@ html{
 /* Estilos del contenedor del formulario */
 .container-form {
 	max-width: 500px;
-	margin: 100px auto;
+	margin: 250px auto;
 	padding: 30px;
 	background-color:white;
 	border-radius: 8px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  
+    margin-bottom: 150px;
 }
 
 /* Estilos del formulario */
