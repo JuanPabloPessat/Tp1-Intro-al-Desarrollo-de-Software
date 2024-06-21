@@ -6,14 +6,13 @@
 	--dark-color: #151515;
 }
 
-body,
 html {
-	height: 100%;
-	width: 100%;
-	position: relative;  
   	font-size: 62.5%;
 	font-family: 'Poppins', sans-serif;
-  	background-color: #f9f5f0;
+}
+
+body{
+	background-color: #f9f5f0;
 }
 
 * {
@@ -40,6 +39,12 @@ html {
 /* ********************************** */
 .container-hero {
 	background-color: var(--background-color);
+}
+
+#titulo{
+	position: fixed;
+	width: 100%;
+	top: 0;
 }
 
 .hero {
@@ -186,6 +191,8 @@ html {
 /* ************* NAVBAR ************* */
 .container-navbar {
 	background-color: var(--primary-color);
+	position: fixed;
+	width: 100%;
 }
 
 .navbar {
@@ -322,8 +329,8 @@ html {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 30px;
   max-width: 600px;
-  margin: 100px auto;
-  margin-bottom: 100px;
+  margin: 250px auto;
+  margin-bottom: 200px;
 }
 
 /* Estilos del contenedor de información */
@@ -413,7 +420,8 @@ button.bg-primary:hover {
 
 .footer {
 	background-color: var(--primary-color);
-	padding-bottom: 30px
+	padding-bottom: 30px;
+	bottom: 0;
 }
 
 .container-footer {
