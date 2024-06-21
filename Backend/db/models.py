@@ -3,6 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+# Tabla de unión para poder tener muchos productos en un solo carrito
+cart_product = db.Table('cart_product',
+    db.Column('cart_id', db.Integer, db.ForeignKey('Cart_table.cart_id')),
+    db.Column('product_id', db.Integer, db.ForeignKey('Products_table.product_id'))
+)
+
 class Product(db.Model):
     __tablename__ = 'Products_table'
     product_id = db.Column(db.Integer, primary_key=True)
@@ -22,8 +28,8 @@ class User(db.Model):
 class Cart(db.Model):
     __tablename__ = 'Cart_table'
     cart_id = db.Column(db.Integer, primary_key=True)
-    product_name = db.Column(db.String(255), unique=True)
-    product_price = db.Column(db.Integer)
+    products = db.relationship('Product', secondary=cart_product, lazy='subquery')
+    
 
 
 
