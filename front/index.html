@@ -41,7 +41,7 @@
 				<nav class="navbar container">
 
 					<ul class="menu">
-						<li><a href="/">Inicio</a></li>
+						<li><a onclick="redirect_home()">Inicio</a></li>
 						<li><a onclick="redirect_products()">Productos</a></li>
 						<li><a href="#">Locales</a>
 							<ul class="sub-menu">
@@ -342,6 +342,19 @@
 				document.getElementById('productos').scrollIntoView({behavior: 'smooth'});
 			}
 
+			function redirect_home(){
+			    if (id != null){
+			        let Params_string = window.location.search;
+			        let Params = new URLSearchParams(Params_string);
+			        let id = Params.get('id');
+			        console.log(id)
+			        window.location.href = '/?id=' + id;
+			    }
+			    else{
+			    	window.location.href = '/';
+			    }
+	      	}
+
 			function redirect_login(){
 				window.location.href = '/user/login'
 			}
@@ -365,6 +378,9 @@
 			function parse_data(content) {
 				console.log("TENGO LA LISTA DE PERSONAJES!")
 				console.log(content)
+				let Params_string = window.location.search;
+				let Params = new URLSearchParams(Params_string);
+				let id = Params.get('id');
 				
 				//PRODUCTOS DESTACADOS
 				let container_destacados = document.getElementById('container productos destacados');
@@ -392,12 +408,13 @@
 	
 					let boton_compra = document.createElement("span");
 					boton_compra.setAttribute("class", "add-cart");
-					let cart_cont = document.getElementById("cart_cont");
-					boton_compra.addEventListener("click",function(){
-						let actual_cant = parseInt(cart_cont.textContent)
-						let new_cant = actual_cant + 1
-						cart_cont.textContent = new_cant
-					})
+					if (id != null){
+						boton_compra.addEventListener("click",function(){
+							let actual_cant = parseInt(cart_cont.textContent)
+							let new_cant = actual_cant + 1
+							cart_cont.textContent = new_cant
+						})
+					}
 					carrito = document.createElement("i");
 					carrito.setAttribute("class", "fa-solid fa-basket-shopping");
 					boton_compra.append(carrito);
@@ -445,11 +462,13 @@
 					let boton_compra = document.createElement("span");
 					boton_compra.setAttribute("class", "add-cart")
 					let cart_cont = document.getElementById("cart_cont");
-					boton_compra.addEventListener("click",function(){
-						let actual_cant = parseInt(cart_cont.textContent)
-						let new_cant = actual_cant + 1
-						cart_cont.textContent = new_cant
-					})
+					if (id != null){
+						boton_compra.addEventListener("click",function(){
+							let actual_cant = parseInt(cart_cont.textContent)
+							let new_cant = actual_cant + 1
+							cart_cont.textContent = new_cant
+						})
+					}
 					carrito = document.createElement("i");
 					carrito.setAttribute("class", "fa-solid fa-basket-shopping");
 					boton_compra.append(carrito);
