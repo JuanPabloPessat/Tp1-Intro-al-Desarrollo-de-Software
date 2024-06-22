@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, render_template, redirect
 from db.models import db 
 from flask_cors import CORS
-from db.models import Product, User, Cart
+from db.models import Product, User, Cart, cart_product
 
 app = Flask(__name__)
 CORS(app)
@@ -29,16 +29,20 @@ def get_products():
         return jsonify({'message': 'Internal server error'}), 500
 
 
-@app.route('/cart/products', methods=['GET'])
-def get_cart_products():
+@app.route('/cart/products/<id_cart>', methods=['GET'])
+def get_cart_products(id_cart):
     try:
-        cart_products = Cart.query.all()
+        results = db.session.query(Product.product_id, Product.name, Product.image, Product.price, Product.stock).\
+            join(Cart.products).where(Cart.cart_id == id_cart).all()
+
         cart_products_data = []
-        for cart_product in cart_products:
+        for product in results:
             data_product = {
-                'cart_id': cart_product.cart_id,
-                'product_name': cart_product.product_name,
-                'product_price': cart_product.product_price,
+            'product_id': product.product_id,
+            'name': product.name,
+            'image': product.image,
+            'price': product.price,
+            'stock': product.stock
             }
             cart_products_data.append(data_product)
         return jsonify(cart_products_data), 200
