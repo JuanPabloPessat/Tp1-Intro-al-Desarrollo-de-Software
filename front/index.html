@@ -25,7 +25,7 @@
 						<h1 class="logo"><a href="/">Cafejo</a></h1>
 					</div>
 
-					<div class="container-user">
+					<div class="container-user" id='container-user'>
 						<i class="fa-solid fa-user" id="user-icon" onclick="redirect_login()"></i>
 						<i class="fa-solid fa-basket-shopping" onclick="redirect_cart()"></i>
 						<div class="content-shopping-cart">
@@ -45,9 +45,9 @@
 						<li><a onclick="redirect_products()">Productos</a></li>
 						<li><a href="#">Locales</a>
 							<ul class="sub-menu">
-								<li><a href="https://www.google.com/maps/place/Av.+Paseo+Col%C3%B3n+850,+Cdad.+Aut%C3%B3noma+de+Buenos+Aires/@-34.6175515,-58.3682068,17z/data=!3m1!4b1!4m6!3m5!1s0x95a334d46ec44845:0x3eb89db">Sede Paseo Colón</a></li>
-								<li><a href="https://www.google.com/maps/place/Av.+Gral.+Las+Heras+2214,+C1126+Cdad.+Aut%C3%B3noma+de+Buenos+Aires/@-34.5885454,-58.3988167,17z/data=!3m1!4b1!4m6!3m5!1s0x95bcca98ed84925f:0x39913f4d2ce53e60!8m2!3d-34.5885498!4d-58.3962364!16s%2Fg%2F11g23543fx?entry=ttu">Sede Las Heras</a></li>
-								<li><a href="https://www.google.com/maps/place/Av.+Int.+G%C3%BCiraldes+2160,+C1428+Cdad.+Aut%C3%B3noma+de+Buenos+Aires/@-34.5452696,-58.4414307,17z/data=!3m1!4b1!4m6!3m5!1s0x95bcb448151cbff5:0x1686d8903485aaf3!8m2!3d-34.545274!4d-58.4388504!16s%2Fg%2F11ggzb96l2?entry=ttu">Sede Ciudad Universitaria</a></li>
+								<li><a target="blank" href="https://www.google.com/maps/place/Av.+Paseo+Col%C3%B3n+850,+Cdad.+Aut%C3%B3noma+de+Buenos+Aires/@-34.6175515,-58.3682068,17z/data=!3m1!4b1!4m6!3m5!1s0x95a334d46ec44845:0x3eb89db">Sede Paseo Colón</a></li>
+								<li><a target="blank" href="https://www.google.com/maps/place/Av.+Gral.+Las+Heras+2214,+C1126+Cdad.+Aut%C3%B3noma+de+Buenos+Aires/@-34.5885454,-58.3988167,17z/data=!3m1!4b1!4m6!3m5!1s0x95bcca98ed84925f:0x39913f4d2ce53e60!8m2!3d-34.5885498!4d-58.3962364!16s%2Fg%2F11g23543fx?entry=ttu">Sede Las Heras</a></li>
+								<li><a target="blank" href="https://www.google.com/maps/place/Av.+Int.+G%C3%BCiraldes+2160,+C1428+Cdad.+Aut%C3%B3noma+de+Buenos+Aires/@-34.5452696,-58.4414307,17z/data=!3m1!4b1!4m6!3m5!1s0x95bcb448151cbff5:0x1686d8903485aaf3!8m2!3d-34.545274!4d-58.4388504!16s%2Fg%2F11ggzb96l2?entry=ttu">Sede Ciudad Universitaria</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -341,12 +341,21 @@
 			function redirect_products() {
 				document.getElementById('productos').scrollIntoView({behavior: 'smooth'});
 			}
-			function redirect_cart(){
-				window.location.href = '/user/cart'
-			}
 
 			function redirect_login(){
 				window.location.href = '/user/login'
+			}
+
+			function redirect_cart(){
+				let Params_string = window.location.search;
+				let Params = new URLSearchParams(Params_string);
+				let id = Params.get('id');
+				if (id != null){
+					window.location.href = '/user/cart?id=' + id;
+				}
+				else{
+					alert("Debe estar logueado para ingresar a su carrito")
+				}
 			}
 			
 			function response_received(response) {
@@ -471,6 +480,39 @@
 				.then(response_received)
 				.then(parse_data)
 				.catch(request_error)
+
+
+				let Params_string = window.location.search;
+				let Params = new URLSearchParams(Params_string);
+				let id = Params.get('id');
+
+
+				if (id != null){
+					function response_received_2(response){
+						return response.json();
+					}
+
+					function show_user_name(content){
+						let name = content.name;
+						console.log(name);
+
+						let container = document.getElementById('container-user');
+						let name_element = document.createElement('h1');
+						name_element.setAttribute("class", "name");
+						name_element.innerText = name;
+
+						container.insertBefore(name_element, container.firstChild);
+					}
+
+					function request_error_2(error){
+						alert(error)
+					}
+
+					fetch(`http://localhost:5000/user/${id}`)
+					.then(response_received_2)
+					.then(show_user_name)
+					.catch(request_error_2)
+				}
 	
 				</script>
 		 
