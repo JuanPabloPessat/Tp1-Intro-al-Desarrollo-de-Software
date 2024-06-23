@@ -387,6 +387,7 @@
 				for (let index = 0; index < 4; index++) {
 					let product_card = document.createElement("div");
 					product_card.setAttribute("class", "card-product");
+					product_card.setAttribute("id",index+1)
 		  
 	
 					let item = document.createElement("div");
@@ -405,14 +406,29 @@
 	
 					let nombre = document.createElement("h3");
 					nombre.innerText = content[index].name;
-	
+
 					let boton_compra = document.createElement("span");
 					boton_compra.setAttribute("class", "add-cart");
 					if (id != null){
 						boton_compra.addEventListener("click",function(){
+							product_id = product_card.id
 							let actual_cant = parseInt(cart_cont.textContent)
 							let new_cant = actual_cant + 1
 							cart_cont.textContent = new_cant
+
+							fetch("http://localhost:5000/user/cart", {
+								method: "POST",
+								headers: {
+									"Content-Type": "application/json"
+								},
+								body: JSON.stringify({ 
+									product_id: product_id,
+									cart_id: id
+								})
+							})
+								.then((res) => res.json())
+								.then(handle_response)
+								.catch((error) => console.log("ERROR", error))
 						})
 					}
 					carrito = document.createElement("i");
@@ -440,6 +456,7 @@
 				for (let index = 0; index < content.length; index++) {
 					let product_card = document.createElement("div");
 					product_card.setAttribute("class", "card-product");
+					product_card.setAttribute("id",index+1)
 			
 
 					let item = document.createElement("div");
@@ -462,11 +479,27 @@
 					let boton_compra = document.createElement("span");
 					boton_compra.setAttribute("class", "add-cart")
 					let cart_cont = document.getElementById("cart_cont");
+					let actual_cant = parseInt(cart_cont.textContent)
 					if (id != null){
 						boton_compra.addEventListener("click",function(){
+							product_id = product_card.id
 							let actual_cant = parseInt(cart_cont.textContent)
 							let new_cant = actual_cant + 1
 							cart_cont.textContent = new_cant
+
+							fetch("http://localhost:5000/user/cart", {
+								method: "POST",
+								headers: {
+									"Content-Type": "application/json"
+								},
+								body: JSON.stringify({ 
+									product_id: product_id,
+									cart_id: id
+								})
+							})
+								.then((res) => res.json())
+								.then(handle_response)
+								.catch((error) => console.log("ERROR", error))
 						})
 					}
 					carrito = document.createElement("i");
