@@ -50,6 +50,22 @@ def get_cart_products(id_cart):
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
 
+@app.route('/cart/remove_products', methods=['GET', 'POST'])
+def remove_cart_products():
+    try:
+        data = request.json
+        cart_id = data.get('cart_id')
+        product_id = data.get('product_id')
+
+        product = CartProduct.query.where(CartProduct.product_id == product_id, CartProduct.cart_id == cart_id).first()
+
+        db.session.delete(product)
+        db.session.commit()
+        return jsonify({"success": True}), 200
+    except Exception as error:
+        print('Error', error)
+        return jsonify({'message': 'Internal server error'}), 500
+
 
 @app.route('/products/<products_id>', methods=['GET'])
 def get_product_Id(products_id):

@@ -33,7 +33,7 @@
       <nav class="navbar container">
 
         <ul class="menu">
-          <li><a href="/">Inicio</a></li>
+          <li><a onclick="redirect_home()">Inicio</a></li>
           <li><a href="/">Productos</a></li>
           <li><a href="#">Locales</a>
             <ul class="sub-menu">
@@ -124,6 +124,9 @@
   
       function parse_data(content) {
         console.log(content);
+        let Params_string = window.location.search;
+        let Params = new URLSearchParams(Params_string);
+        let id = Params.get('id');
         
         let container_productos = document.getElementById('container productos');
         let precio_total = 0;
@@ -151,6 +154,7 @@
 
           let boton_eliminar = document.createElement("button");
           boton_eliminar.setAttribute("class", "remove-cart");
+          boton_eliminar.setAttribute("onclick", `remove_product(${id}, ${content[index].product_id})`);
           boton_eliminar.innerText = "x";
 
           contenido.append(nombre);
@@ -181,6 +185,41 @@
         .then(response_received)
         .then(parse_data)
         .catch(request_error)
+
+
+        function remove_product(cartId, productId){
+          let data = {
+            cart_id: cartId,
+            product_id: productId
+          };
+
+          function parse_response(response){
+            return response.json();
+          }
+
+          function handle_response(response_json){
+            if (response_json.success) {
+                window.location.reload();
+            } else {
+                alert("Error");
+            }
+          }
+
+          function request_error(error){
+            console.log(error)
+          }
+
+          fetch('http://localhost:5000/cart/remove_products', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+              })
+          .then(parse_response)
+          .then(handle_response)
+          .catch(request_error)
+        }
   
      </script>
 
