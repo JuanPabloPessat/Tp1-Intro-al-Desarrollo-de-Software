@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class CartProduct(db.Model):
-    __tablename__ = 'cart_product'
+    __tablename__ = 'Cart_product'
     id = db.Column(db.Integer, primary_key=True)
     cart_id = db.Column(db.Integer, db.ForeignKey('Cart_table.cart_id'))
     product_id = db.Column(db.Integer, db.ForeignKey('Products_table.product_id'))
@@ -28,7 +28,7 @@ class User(db.Model):
 class Cart(db.Model):
     __tablename__ = 'Cart_table'
     cart_id = db.Column(db.Integer, primary_key=True)
-    products = db.relationship('Product', secondary=cart_product, lazy='subquery')
+    products = db.relationship('Product', secondary='cart_product', lazy='subquery')
     
 
 
