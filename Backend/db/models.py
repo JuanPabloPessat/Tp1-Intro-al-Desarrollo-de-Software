@@ -5,7 +5,7 @@ db = SQLAlchemy()
 
 class CartProduct(db.Model):
     __tablename__ = 'cart_product'
-    id = db.Column(db.String(255), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
     cart_id = db.Column(db.Integer, db.ForeignKey('Cart_table.cart_id'))
     product_id = db.Column(db.Integer, db.ForeignKey('Products_table.product_id'))
 
