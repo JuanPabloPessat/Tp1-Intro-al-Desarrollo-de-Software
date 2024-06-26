@@ -228,6 +228,7 @@ header{
 
 .search-form .btn-search {
 	border: none;
+	border-radius:2rem;
 	background-color: var(--primary-color);
 	display: flex;
 	align-items: center;

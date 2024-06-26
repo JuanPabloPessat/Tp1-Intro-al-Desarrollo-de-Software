@@ -331,6 +331,60 @@
 			</div>
 		</footer>
 		
+		<script>
+			document.addEventListener('DOMContentLoaded', () => {
+            const searchForm = document.querySelector('.search-form');
+            const searchInput = searchForm.querySelector('input[type="search"]');
+            const searchButton = searchForm.querySelector('.btn-search');
+
+            let isExpanded = false;
+
+            searchForm.addEventListener('submit', (e) => {
+                if (searchInput.value.trim() === '') {
+                e.preventDefault();
+                if (isExpanded) {
+                    collapseSearchBar();
+                } else {
+                    expandSearchBar();
+                }
+                }
+                // If there's content, the form will submit normally
+            });
+
+            searchButton.addEventListener('click', (e) => {
+                if (!isExpanded) {
+                e.preventDefault();
+                expandSearchBar();
+                }
+                // If expanded, let the form's submit event handle it
+            });
+
+            searchInput.addEventListener('blur', () => {
+                if (searchInput.value.trim() === '' && !searchForm.matches(':hover')) {
+                collapseSearchBar();
+                }
+            });
+
+            function expandSearchBar() {
+                searchForm.style.width = '300px';
+                searchInput.style.width = '250px';
+                searchInput.style.padding = '0 1rem';
+                searchInput.focus();
+                isExpanded = true;
+            }
+
+            function collapseSearchBar() {
+                searchForm.style.width = '4.4rem';
+                searchInput.style.width = '0';
+                searchInput.style.padding = '0';
+                isExpanded = false;
+            }
+
+            // Initialize the search bar in collapsed state
+            collapseSearchBar();
+            });
+		</script>
+
 		<script
 			src="https://kit.fontawesome.com/81581fb069.js"
 			crossorigin="anonymous"
