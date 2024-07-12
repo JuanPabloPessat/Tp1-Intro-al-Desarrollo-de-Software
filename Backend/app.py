@@ -12,7 +12,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 @app.route('/products', methods=['GET'])
 def get_products():
     try:
-        products = Product.query.all()
+        products = Product.query.order_by(Product.product_id).all()
         products_data = []
         for product in products:
             data_product = {
@@ -83,7 +83,30 @@ def get_product_Id(products_id):
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
 
-@app.route('/user/login', methods=['GET', 'POST']) # Falta ir al home ya logueado, por ahora va al home pero sin loguear
+@app.route('/cart/make_purchase/<cart_id>', methods=['DELETE'])
+def make_purchase(cart_id):
+    try:
+        cart_products = CartProduct.query.where(CartProduct.cart_id == cart_id).all()
+
+        #Disminuye el stock de los productos en el carrito antes de limpiar el carrito
+        for cart_product in cart_products:
+            stock_product = Product.query.get(cart_product.product_id)
+            if stock_product.stock > 0:
+                stock_product.stock -= 1
+                db.session.add(stock_product)
+        db.session.commit()
+
+        #limpia el carrito
+        CartProduct.query.where(CartProduct.cart_id == cart_id).delete()
+        db.session.commit()
+
+        return jsonify({"success": True}), 200
+
+    except:
+        return jsonify({"success": False}), 400
+
+
+@app.route('/user/login', methods=['GET', 'POST']) 
 def login():
     if request.method == 'POST':
         name = request.json.get("name")
