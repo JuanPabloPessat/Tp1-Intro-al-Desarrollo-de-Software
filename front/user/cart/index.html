@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <!--soperte tecnico-->
+  <!--soporte tecnico-->
   <header id="titulo">
     <div class="container-hero">
       <div class="container hero">
@@ -66,7 +66,7 @@
         <p id="total">TOTAL:</p>
         <p id="price">$0</p>
     </div>
-    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full">
+    <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full" id="make_purchase_button">
       Finalizar Compra
     </button>
   </article>
@@ -108,6 +108,13 @@
   </footer>
   <script src="https://kit.fontawesome.com/81581fb069.js" crossorigin="anonymous"></script>
   <script>
+
+      let Params_string = window.location.search;
+      let Params = new URLSearchParams(Params_string);
+      let id = Params.get('id');
+
+      let boton_compra = document.getElementById('make_purchase_button');
+      boton_compra.setAttribute("onclick", `make_purchase(${id})`)
       
       function redirect_home(){
         let Params_string = window.location.search;
@@ -176,10 +183,6 @@
           console.log("ERROR");
           console.log(error);
         }
-  
-        let Params_string = window.location.search;
-        let Params = new URLSearchParams(Params_string);
-        let id = Params.get('id');
 
         fetch(`http://localhost:5000/cart/products/${id}`)
         .then(response_received)
@@ -219,6 +222,35 @@
           .then(parse_response)
           .then(handle_response)
           .catch(request_error)
+        }
+
+        function make_purchase(cartId){
+          function parse_response(response){
+            return response.json();
+          }
+
+          function handle_response(response_json){
+            if (response_json.success) {
+                window.location.reload();
+                alert("Compra realizada con exito")
+            } else {
+                alert("Error");
+            }
+          }
+
+          function request_error(error){
+            console.log(error)
+          }
+
+          fetch(`http://localhost:5000/cart/make_purchase/${cartId}`, {
+                method: 'DELETE',
+                headers: {
+                  "Content-Type": "application/json"
+                }
+              })
+          .then(parse_response)
+          .then(handle_response)
+          .catch(request_error);
         }
   
      </script>

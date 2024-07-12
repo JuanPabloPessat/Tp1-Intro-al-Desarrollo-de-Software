@@ -126,76 +126,14 @@
 				</div>
 			</section>
 
-			<!-- ASI ESTA AHORA (Si ves todo esto horrible no te asustes ya lo voy a corregir, tambièn desaparecieron las estrellas de los productos, eso lo voy a tener que dejar así) -->
+			
 			<section class="container top-products">
 				<h1 class="heading-1">Mejores Productos</h1>
 				<div class="container-products" id = "container productos destacados">
-					<!--ACA IRIAN LOS PRODRUCTOS-->
+					
 				</div>
 			</section>
 
-			<!--ASI ESTABA ANTES 
-			<section class="container top-products">
-				<h1 class="heading-1">Mejores Productos</h1>
-				<div class="container-products" id = "container productos en venta">
-
-					<div class="card-product">
-						<div class="container-img">
-							<img src="img/cafe-irish.jpg" alt="Cafe Irish" />
-							<span class="discount">-13%</span>
-						</div>
-						<div class="content-card-product">
-							<h3>Cafe Irish</h3>
-							<span class="add-cart">
-								<i class="fa-solid fa-basket-shopping"></i>
-							</span>
-							<p class="price">$4.60 <span>$5.30</span></p>
-						</div>
-					</div>
-					
-					<div class="card-product">
-						<div class="container-img">
-							<img src="img/cafe-ingles.jpg" alt="Cafe incafe-ingles.jpg"/>
-							<span class="discount">-22%</span>
-						</div>
-						<div class="content-card-product">
-							<h3>Cafe Inglés</h3>
-							<span class="add-cart">
-								<i class="fa-solid fa-basket-shopping"></i>
-							</span>
-							<p class="price">$5.70 <span>$7.30</span></p>
-						</div>
-					</div>
-					
-					<div class="card-product">
-						<div class="container-img">
-							<img src="img/cafe-australiano.jpg" alt="Cafe Australiano"/>
-						</div>
-						<div class="content-card-product">
-							<h3>Cafe Australiano</h3>
-							<span class="add-cart">
-								<i class="fa-solid fa-basket-shopping"></i>
-							</span>
-							<p class="price">$3.20</p>
-						</div>
-					</div> 
-
-					<div class="card-product">
-						<div class="container-img">
-							<img src="img/cafe-helado.jpg" alt="Cafe Helado" />
-						</div>
-						<div class="content-card-product">
-							<h3>Cafe Helado</h3>
-							<span class="add-cart">
-								<i class="fa-solid fa-basket-shopping"></i>
-							</span>
-							<p class="price">$5.60</p>
-						</div>
-					</div>
-
-				</div> 
-			</section>
-			-->
 
 			<section class="gallery">
 				<img
@@ -224,74 +162,10 @@
 			<section class="container specials">
 				<h1 class="heading-1" id='productos'>En Venta</h1>
 				<div class="container-products" id = "container productos en venta">
-					<!--ACA IRIAN TODOS LOS PRODRUCTOS-->
+					
 				</div>
 			</section>
 
-			<!-- ASI ESTABA ANTES 
-			<section class="container specials">
-				<h1 class="heading-1">En Venta</h1>
-				<div class="container-products">
-
-					<div class="card-product">
-						<div class="container-img">
-							<img src="img/cafe-irish.jpg" alt="Cafe Irish" />
-							<span class="discount">-13%</span>
-						</div>
-						<div class="content-card-product">
-							<h3>Cafe Irish</h3>
-							<span class="add-cart">
-								<i class="fa-solid fa-basket-shopping"></i>
-							</span>
-							<p class="price">$4.60 <span>$5.30</span></p>
-						</div>
-					</div>
-
-					<div class="card-product">
-						<div class="container-img">
-							<img src="img/cafe-ingles.jpg" alt="Cafe incafe-ingles.jpg"/>
-							<span class="discount">-22%</span>
-						</div>
-						<div class="content-card-product">
-							<h3>Cafe Inglés</h3>
-							<span class="add-cart">
-								<i class="fa-solid fa-basket-shopping"></i>
-							</span>
-							<p class="price">$5.70 <span>$7.30</span></p>
-						</div>
-					</div>
-
-					<div class="card-product">
-						<div class="container-img">
-							<img src="img/cafe-viena.jpg" alt="Cafe Viena" />
-							<span class="discount">-30%</span>
-						</div>
-						<div class="content-card-product">
-							<h3>Cafe Viena</h3>
-							<span class="add-cart">
-								<i class="fa-solid fa-basket-shopping"></i>
-							</span>
-							<p class="price">$3.85 <span>$5.50</span></p>
-						</div>
-					</div>
-
-					<div class="card-product">
-						<div class="container-img">
-							<img src="img/cafe-liqueurs.jpg" alt="Cafe Liqueurs" />
-							<span class="discount">-30%</span>
-						</div>
-						<div class="content-card-product">
-							<h3>Cafe Liqueurs</h3>
-							<span class="add-cart">
-								<i class="fa-solid fa-basket-shopping"></i>
-							</span>
-							<p class="price">$5.60<span>$5.50</span></p>
-						</div>
-					</div>
-
-				</div> 
-			</section>
-		-->
 		</main>
 
 		<footer class="footer">
@@ -467,10 +341,19 @@
 					boton_compra.setAttribute("class", "add-cart");
 					if (id != null){
 						boton_compra.addEventListener("click",function(){
-							product_id = product_card.id
+							product_id = product_card.id;
+							console.log(product_id);
 							let actual_cant = parseInt(cart_cont.textContent)
 							let new_cant = actual_cant + 1
 							cart_cont.textContent = new_cant
+
+							function handle_response(response_json){
+            					if (response_json.success) {
+                					console.log("Exito")
+            					} else {
+                					alert("Error");
+            					}
+          					}
 
 							fetch("http://localhost:5000/user/cart", {
 								method: "POST",
@@ -542,6 +425,10 @@
 							let actual_cant = parseInt(cart_cont.textContent)
 							let new_cant = actual_cant + 1
 							cart_cont.textContent = new_cant
+
+							function handle_response(){
+
+							}
 
 							fetch("http://localhost:5000/user/cart", {
 								method: "POST",
