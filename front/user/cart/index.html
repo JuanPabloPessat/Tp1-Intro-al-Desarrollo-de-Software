@@ -231,10 +231,10 @@
 
           function handle_response(response_json){
             if (response_json.success) {
+                alert("Compra realizada con exito");
                 window.location.reload();
-                alert("Compra realizada con exito")
             } else {
-                alert("Error");
+                alert("Lo sentimos, ocurrió un error inesperado");
             }
           }
 
