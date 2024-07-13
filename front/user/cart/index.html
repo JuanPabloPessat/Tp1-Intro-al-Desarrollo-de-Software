@@ -59,7 +59,7 @@
       <p class="text-sm text-muted-foreground">Revisa los productos que has agregado a tu carrito.</p>
       <hr>
     </div>
-    <div class="container-products" id='container productos'>
+    <div class="container-products" id='container_products'>
     </div>
     <hr>
     <div class="total">
@@ -113,8 +113,8 @@
       let Params = new URLSearchParams(Params_string);
       let id = Params.get('id');
 
-      let boton_compra = document.getElementById('make_purchase_button');
-      boton_compra.setAttribute("onclick", `make_purchase(${id})`)
+      let buy_button = document.getElementById('make_purchase_button');
+      buy_button.setAttribute("onclick", `make_purchase(${id})`)
       
       function redirect_home(){
         let Params_string = window.location.search;
@@ -130,53 +130,53 @@
       }
   
       function parse_data(content) {
-        console.log(content);
-        let Params_string = window.location.search;
-        let Params = new URLSearchParams(Params_string);
-        let id = Params.get('id');
-        
-        let container_productos = document.getElementById('container productos');
-        let precio_total = 0;
+          console.log(content);
+          let Params_string = window.location.search;
+          let Params = new URLSearchParams(Params_string);
+          let id = Params.get('id');
+          
+          let container_products = document.getElementById('container_products');
+          let total_price = 0;
 
-        for (let index = 0; index < content.length; index++) {
-          let product_card = document.createElement("div");
-          product_card.setAttribute("class", "card-product");
+          for (let index = 0; index < content.length; index++) {
+              let product_card = document.createElement("div");
+              product_card.setAttribute("class", "card-product");
 
-          let item = document.createElement("div");
-          item.setAttribute("class", "container-img");
+              let item = document.createElement("div");
+              item.setAttribute("class", "container-img");
 
-          product_card.append(item)
+              product_card.append(item)
 
-          let contenido = document.createElement("div");
-          contenido.setAttribute("class", "content-card-product");
+              let product = document.createElement("div");
+              product.setAttribute("class", "content-card-product");
 
-          let nombre = document.createElement("p");
-          nombre.setAttribute("class", "name");
-          nombre.innerText = content[index].name;
+              let name = document.createElement("p");
+              name.setAttribute("class", "name");
+              name.innerText = content[index].name;
 
-          let precio = document.createElement("p");
-          precio.setAttribute("class", "price");
-          precio.innerText = `$${content[index].price}`
-          precio_total += content[index].price;
+              let price = document.createElement("p");
+              price.setAttribute("class", "price");
+              price.innerText = `$${content[index].price}`
+              total_price += content[index].price;
 
-          let boton_eliminar = document.createElement("button");
-          boton_eliminar.setAttribute("class", "remove-cart");
-          boton_eliminar.setAttribute("onclick", `remove_product(${id}, ${content[index].product_id})`);
-          boton_eliminar.innerText = "x";
+              let delete_button = document.createElement("button");
+              delete_button.setAttribute("class", "remove-cart");
+              delete_button.setAttribute("onclick", `remove_product(${id}, ${content[index].product_id})`);
+              delete_button.innerText = "x";
 
-          contenido.append(nombre);
-          contenido.append(boton_eliminar);
+              product.append(name);
+              product.append(delete_button);
 
-          product_card.append(contenido);
-          product_card.append(precio);
+              product_card.append(product);
+              product_card.append(price);
 
-          container_productos.append(product_card);
+              container_products.append(product_card);
 
-          console.log(content[index].name, content[index].price);
-          }
+              console.log(content[index].name, content[index].price);
+            }
 
-          let etiqueta_precio = document.getElementById("price");
-          etiqueta_precio.innerText = `$${precio_total}`;
+            let price_label = document.getElementById("price");
+            price_label.innerText = `$${total_price}`;
         }
   
         function request_error(error) {

@@ -129,7 +129,7 @@
 			
 			<section class="container top-products">
 				<h1 class="heading-1">Mejores Productos</h1>
-				<div class="container-products" id = "container productos destacados">
+				<div class="container-products" id = "container_featured_products">
 					
 				</div>
 			</section>
@@ -161,7 +161,7 @@
 
 			<section class="container specials">
 				<h1 class="heading-1" id='productos'>En Venta</h1>
-				<div class="container-products" id = "container productos en venta">
+				<div class="container-products" id = "container_onsale_products">
 					
 				</div>
 			</section>
@@ -310,7 +310,7 @@
 				let id = Params.get('id');
 				
 				//PRODUCTOS DESTACADOS
-				let container_destacados = document.getElementById('container productos destacados');
+				let container_featured = document.getElementById('container_featured_products');
 				for (let index = 0; index < 4; index++) {
 					let product_card = document.createElement("div");
 					product_card.setAttribute("class", "card-product");
@@ -320,29 +320,29 @@
 					let item = document.createElement("div");
 					item.setAttribute("class", "container-img");
 	
-					let imagen = document.createElement("img");
-					imagen.setAttribute("src", content[index].image);	
+					let image = document.createElement("img");
+					image.setAttribute("src", content[index].image);	
 	
-					item.append(imagen)            
+					item.append(image)            
 					product_card.append(item)
 	
 	
 	
-					let contenido = document.createElement("div");
-					contenido.setAttribute("class", "content-card-product");
+					let product = document.createElement("div");
+					product.setAttribute("class", "content-card-product");
 	
-					let nombre = document.createElement("h3");
-					nombre.innerText = content[index].name;
+					let name = document.createElement("h3");
+					name.innerText = content[index].name;
 
-					let boton_compra = document.createElement("span");
-					boton_compra.setAttribute("class", "add-cart");
+					let buy_button = document.createElement("span");
+					buy_button.setAttribute("class", "add-cart");
 					if (id != null){
-						boton_compra.addEventListener("click",function(){
+						buy_button.addEventListener("click",function(){
 							product_id = product_card.id;
 							console.log(product_id);
-							let actual_cant = parseInt(cart_cont.textContent)
-							let new_cant = actual_cant + 1
-							cart_cont.textContent = new_cant
+							let current_amount = parseInt(cart_cont.textContent)
+							let new_amount = current_amount + 1
+							cart_cont.textContent = new_amount
 
 							function handle_response(response_json){
             					if (response_json.success) {
@@ -367,28 +367,28 @@
 								.catch((error) => console.log("ERROR", error))
 						})
 					}
-					carrito = document.createElement("i");
-					carrito.setAttribute("class", "fa-solid fa-basket-shopping");
-					boton_compra.append(carrito);
+					cart = document.createElement("i");
+					cart.setAttribute("class", "fa-solid fa-basket-shopping");
+					buy_button.append(cart);
 	
-					let precio = document.createElement("p");
-					precio.setAttribute("class", "price");
-					precio.innerText = `$${content[index].price}`
+					let price = document.createElement("p");
+					price.setAttribute("class", "price");
+					price.innerText = `$${content[index].price}`
 	
-					contenido.append(nombre);
-					contenido.append(boton_compra);
-					contenido.append(precio);
+					product.append(name);
+					product.append(buy_button);
+					product.append(price);
 	
-					product_card.append(contenido)
+					product_card.append(product)
 	
 	
 	
-					container_destacados.append(product_card);
+					container_featured.append(product_card);
 				}
 
 
 				//PRODUCTOS EN VENTA
-				container_en_venta = document.getElementById('container productos en venta');
+				container_onsale = document.getElementById('container_onsale_products');
 				for (let index = 0; index < content.length; index++) {
 					let product_card = document.createElement("div");
 					product_card.setAttribute("class", "card-product");
@@ -398,30 +398,30 @@
 					let item = document.createElement("div");
 					item.setAttribute("class", "container-img");
 	
-					let imagen = document.createElement("img");
-					imagen.setAttribute("src", content[index].image);	
+					let image = document.createElement("img");
+					image.setAttribute("src", content[index].image);	
 		
-					item.append(imagen)            
+					item.append(image)            
 					product_card.append(item)
 		
 		
 		
-					let contenido = document.createElement("div");
-					contenido.setAttribute("class", "content-card-product");
+					let product = document.createElement("div");
+					product.setAttribute("class", "content-card-product");
 		
-					let nombre = document.createElement("h3");
-					nombre.innerText = content[index].name;
+					let name = document.createElement("h3");
+					name.innerText = content[index].name;
 	
-					let boton_compra = document.createElement("span");
-					boton_compra.setAttribute("class", "add-cart")
+					let buy_button = document.createElement("span");
+					buy_button.setAttribute("class", "add-cart")
 					let cart_cont = document.getElementById("cart_cont");
-					let actual_cant = parseInt(cart_cont.textContent)
+					let current_amount= parseInt(cart_cont.textContent)
 					if (id != null){
-						boton_compra.addEventListener("click",function(){
+						buy_button.addEventListener("click",function(){
 							product_id = product_card.id
-							let actual_cant = parseInt(cart_cont.textContent)
-							let new_cant = actual_cant + 1
-							cart_cont.textContent = new_cant
+							let current_amount = parseInt(cart_cont.textContent)
+							let new_amount = current_amount + 1
+							cart_cont.textContent = new_amount
 
 							function handle_response(){
 
@@ -442,23 +442,23 @@
 								.catch((error) => console.log("ERROR", error))
 						})
 					}
-					carrito = document.createElement("i");
-					carrito.setAttribute("class", "fa-solid fa-basket-shopping");
-					boton_compra.append(carrito);
+					cart = document.createElement("i");
+					cart.setAttribute("class", "fa-solid fa-basket-shopping");
+					buy_button.append(cart);
 		
-					let precio = document.createElement("p");
-					precio.setAttribute("class", "price");
-					precio.innerText = `$${content[index].price}`
+					let price = document.createElement("p");
+					price.setAttribute("class", "price");
+					price.innerText = `$${content[index].price}`
 		
-					contenido.append(nombre);
-					contenido.append(boton_compra);
-					contenido.append(precio);
+					product.append(name);
+					product.append(buy_button);
+					product.append(price);
 		
-					product_card.append(contenido)
+					product_card.append(product)
 			
 		
 
-					container_en_venta.append(product_card);
+					container_onsale.append(product_card);
 				}
 			}
 	
