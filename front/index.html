@@ -222,7 +222,6 @@
                     expandSearchBar();
                 }
                 }
-                // If there's content, the form will submit normally
             });
 
             searchButton.addEventListener('click', (e) => {
@@ -230,7 +229,6 @@
                 e.preventDefault();
                 expandSearchBar();
                 }
-                // If expanded, let the form's submit event handle it
             });
 
             searchInput.addEventListener('blur', () => {
@@ -254,7 +252,6 @@
                 isExpanded = false;
             }
 
-            // Initialize the search bar in collapsed state
             collapseSearchBar();
             });
 		</script>
@@ -509,7 +506,7 @@
 					.catch(request_error_2)
 				}
 	
-				</script>
+		</script>
 		 
 	</body>
 </html>
