@@ -367,6 +367,11 @@
 								.catch((error) => console.log("ERROR", error))
 						})
 					}
+					else{
+						buy_button.addEventListener("click",function(){
+							alert("Debes iniciar sesión para agregar al carrito.")
+						})
+					}
 					cart = document.createElement("i");
 					cart.setAttribute("class", "fa-solid fa-basket-shopping");
 					buy_button.append(cart);
