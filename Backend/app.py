@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template, redirect
+from flask import Flask, jsonify, request, render_template
 from db.models import db 
 from flask_cors import CORS
 from db.models import Product, User, Cart, CartProduct
@@ -115,7 +115,6 @@ def login():
         user = User.query.filter_by(name=name).first()
 
         if user and user.password == password:
-            #session['nombre'] = usuario.nombre ver session de flask
             return jsonify({"success": True, "userId": user.id}), 200
         else:
             return jsonify({"success": False, "message": "Nombre o contraseña inválidos"}), 400

@@ -26,7 +26,7 @@
 					</div>
 
 					<div class="container-user" id='container-user'>
-						<i class="fa-solid fa-user" id="user-icon" onclick="redirect_login()"></i>
+						<i class="fa-solid fa-user" id="user-icon"></i>
 						<i class="fa-solid fa-basket-shopping" onclick="redirect_cart()"></i>
 						<div class="content-shopping-cart">
 							<span class="text" onclick="redirect_cart()">Carrito</span>
@@ -263,6 +263,11 @@
 
 		<script>
 			
+			let Params_string = window.location.search;
+			let Params = new URLSearchParams(Params_string);
+			let id = Params.get('id');
+
+
 			function redirect_products() {
 				document.getElementById('productos').scrollIntoView({behavior: 'smooth'});
 			}
@@ -298,6 +303,16 @@
 				}
 			}
 			
+
+			let user_button = document.getElementById("user-icon");
+			if (id != null){
+				user_button.setAttribute("onclick", "redirect_cart()");
+			}
+			else {
+				user_button.setAttribute("onclick", "redirect_login()");
+			}
+
+
 			function response_received(response) {
 				return response.json()
 			}
@@ -477,11 +492,6 @@
 				.then(response_received)
 				.then(parse_data)
 				.catch(request_error)
-
-
-				let Params_string = window.location.search;
-				let Params = new URLSearchParams(Params_string);
-				let id = Params.get('id');
 
 
 				if (id != null){
