@@ -145,6 +145,10 @@ body{
 	
 }
 
+#delete-account-button:hover {
+	color: red;
+}
+
 .menu li ul {
 	display:none;
 	position:absolute;
