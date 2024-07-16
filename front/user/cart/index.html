@@ -42,6 +42,8 @@
             </ul>
           </li>
           <li><a href="/">Cerrar sesión</a></li>
+          <li><a>Cambiar contraseña</a></li>
+          <li><a id="delete-account-button" onclick="delete_account()">Eliminar cuenta</a></li>
         </ul>
 
         <form class="search-form">
@@ -251,6 +253,47 @@
           .then(parse_response)
           .then(handle_response)
           .catch(request_error);
+        }
+
+        function delete_account(){
+          
+
+
+
+          let user_confirmed = confirm("¿Esta seguro que desea eliminar su cuenta? No podrá recuperarla")
+          if (user_confirmed){
+            let Params_string = window.location.search;
+            let Params = new URLSearchParams(Params_string);
+            let Id = Params.get('id');
+            console.log(Id)
+
+            function parse_response(response){
+              return response.json();
+            }
+
+            function handle_response(response_json){
+              if (response_json.success) {
+                alert("Cuenta eliminada con exito");
+                window.location.href = '/';
+              } else {
+                alert("Lo sentimos, ocurrió un error inesperado");
+              }
+            }
+
+            function catch_error(error){
+              console.log(error)
+            }
+
+            fetch(`http://localhost:5000/user/delete_account/${Id}`, {
+              method: 'DELETE',
+              headers: {
+                "Content-Type": "application/json"
+              }
+            })
+            .then(parse_response)
+            .then(handle_response)
+            .catch(request_error)
+          }
         }
   
      </script>

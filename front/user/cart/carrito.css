@@ -615,3 +615,6 @@ button.bg-primary:hover {
 	color: red;
 }
 
+#delete-account-button {
+	color: mediumvioletred;
+}
