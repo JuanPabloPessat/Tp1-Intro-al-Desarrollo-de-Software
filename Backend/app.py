@@ -147,12 +147,16 @@ def register():
         elif name in users_name:
             return jsonify({"success": False, "message": "Ese nombre ya se encuentra registrado"}), 400
 
-        new_cart = Cart(cart_id=cart_id)
+        new_user = User(name=name,password=password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        cart_id = new_user.id
+        new_cart = Cart(cart_id = cart_id)
         db.session.add(new_cart)
         db.session.commit()
 
-        new_user = User(name=name,password=password, cart_id=cart_id)
-        db.session.add(new_user)
+        new_user.cart_id = cart_id
         db.session.commit()
 
         return jsonify({"success": True}), 200
@@ -171,6 +175,34 @@ def get_user(user_id):
     except Exception as error:
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
+
+@app.route('/user/delete_account/<user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    try:
+
+        user = User.query.where(User.id == user_id).first()
+        user_cart = Cart.query.where(Cart.cart_id == user.cart_id).first()
+
+        if user:
+            user_cart = Cart.query.where(Cart.cart_id == user.cart_id).first()
+            print(user_cart.cart_id)
+            cart_products = CartProduct.query.where(CartProduct.cart_id == user_cart.cart_id).all()
+            print(f"Cart products: {cart_products}")
+            CartProduct.query.where(CartProduct.cart_id==user_cart.cart_id).delete()
+            db.session.commit()
+
+            db.session.delete(user_cart)
+            db.session.delete(user)
+        else:
+            return jsonify({"success": False}), 400
+        db.session.commit()
+
+        return jsonify({"success": True}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error: {e}")
+        return jsonify({"success": False}), 400
 
 @app.route('/user/cart', methods=['POST'])
 def add_to_cart():
