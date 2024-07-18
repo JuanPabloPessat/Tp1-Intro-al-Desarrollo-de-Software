@@ -43,8 +43,8 @@
           </li>
           <li><a href="/">Ajustes</a>
             <ul class="sub-menu">
-              <li><a href="">Cambiar Contraseña</a></li>
-              <li><a href="">Cerrar Sesión</a></li>
+              <li><a onclick="redirect_password()">Cambiar Contraseña</a></li>
+              <li><a href="/">Cerrar Sesión</a></li>
               <li><a id="delete-account-button" onclick="delete_account()">Eliminar Cuenta</a></li>
             </ul>
           </li>
@@ -124,6 +124,12 @@
         window.location.href = '/?id=' + id;
       }
 
+      function redirect_password(){
+        let Params_string = window.location.search;
+        let Params = new URLSearchParams(Params_string);
+        let id = Params.get('id');
+        window.location.href = '/user/password?id=' + id;
+      }
 
       function response_received(response) {
         return response.json();
