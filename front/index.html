@@ -315,18 +315,21 @@
 					cart_cont.textContent = new_amount
 				}
 
-				fetch("http://localhost:5000/user/cart/products_amount", {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json"
-						},
-						body: JSON.stringify({ 
-							user_id : id
+				if(id != null){
+
+					fetch("http://localhost:5000/user/cart/products_amount", {
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json"
+							},
+							body: JSON.stringify({ 
+								user_id : id
+							})
 						})
-					})
-						.then((res) => res.json())
-						.then(cart_amount)
-						.catch((error) => console.log("ERROR", error))
+							.then((res) => res.json())
+							.then(cart_amount)
+							.catch((error) => console.log("ERROR", error))
+				}
 			}
 
 			
