@@ -221,6 +221,21 @@ def add_to_cart():
     except Exception as error:
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
+    
+@app.route('/user/password', methods=['GET','POST'])
+def password_change():
+    if request.method == 'POST':
+        old_password = request.json.get("old_password")
+        new_password = request.json.get("password")
+
+        user = User.query.filter_by(password=old_password).first()
+
+        if user and user.password == old_password:
+            user.password = new_password
+            db.session.commit()
+            return jsonify({"success": True, "userId": user.id}), 200
+        else:
+            return jsonify({"success": False, "message": "Nombre o contraseña inválidos"}), 400
 
 
 
