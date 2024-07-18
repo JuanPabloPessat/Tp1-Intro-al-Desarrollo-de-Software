@@ -236,6 +236,15 @@ def password_change():
             return jsonify({"success": True, "userId": user.id}), 200
         else:
             return jsonify({"success": False, "message": "Nombre o contraseña inválidos"}), 400
+        
+@app.route('/user/cart/products_amount', methods=['GET','POST'])
+def get_cart_amount():
+
+    user_id = request.json.get("user_id")
+    cart = Cart.query.where(Cart.cart_id == user_id).first()
+    products_amount = cart.products_amount
+
+    return jsonify({"products_amount": products_amount})
 
 
 

@@ -30,7 +30,7 @@
 						<i class="fa-solid fa-basket-shopping" onclick="redirect_cart()"></i>
 						<div class="content-shopping-cart">
 							<span class="text" onclick="redirect_cart()">Carrito</span>
-							<span class="number contador-productos" id="cart_cont">0</span>
+							<span class="number contador-productos" id="cart_cont"></span>
 						</div>
 					</div>
 
@@ -43,7 +43,7 @@
 					<ul class="menu">
 						<li><a onclick="redirect_home()">Inicio</a></li>
 						<li><a onclick="redirect_products()">Productos</a></li>
-						<li><a href="#">Locales</a>
+						<li><a>Locales</a>
 							<ul class="sub-menu">
 								<li><a target="blank" href="https://www.google.com/maps/place/Av.+Paseo+Col%C3%B3n+850,+Cdad.+Aut%C3%B3noma+de+Buenos+Aires/@-34.6175515,-58.3682068,17z/data=!3m1!4b1!4m6!3m5!1s0x95a334d46ec44845:0x3eb89db">Sede Paseo Colón</a></li>
 								<li><a target="blank" href="https://www.google.com/maps/place/Av.+Gral.+Las+Heras+2214,+C1126+Cdad.+Aut%C3%B3noma+de+Buenos+Aires/@-34.5885454,-58.3988167,17z/data=!3m1!4b1!4m6!3m5!1s0x95bcca98ed84925f:0x39913f4d2ce53e60!8m2!3d-34.5885498!4d-58.3962364!16s%2Fg%2F11g23543fx?entry=ttu">Sede Las Heras</a></li>
@@ -302,6 +302,33 @@
 					alert("Debe estar logueado para ingresar a su carrito")
 				}
 			}
+			cart()
+			function cart(){
+				let Params_string = window.location.search;
+			    let Params = new URLSearchParams(Params_string);
+			    let id = Params.get('id');
+
+				function cart_amount(content){
+					let products_amount = content.products_amount
+					let current_amount = parseInt(cart_cont.textContent)
+					let new_amount = products_amount
+					cart_cont.textContent = new_amount
+				}
+
+				fetch("http://localhost:5000/user/cart/products_amount", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({ 
+							user_id : id
+						})
+					})
+						.then((res) => res.json())
+						.then(cart_amount)
+						.catch((error) => console.log("ERROR", error))
+			}
+
 			
 
 			let user_button = document.getElementById("user-icon");
@@ -520,6 +547,7 @@
 					.then(show_user_name)
 					.catch(request_error_2)
 				}
+		
 	
 		</script>
 		 
