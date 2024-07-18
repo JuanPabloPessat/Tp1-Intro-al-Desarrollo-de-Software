@@ -27,8 +27,5 @@ class User(db.Model):
 class Cart(db.Model):
     __tablename__ = 'Cart_table'
     cart_id = db.Column(db.Integer, primary_key=True)
+    products_amount = db.Column(db.Integer)
     products = db.relationship('Product', secondary='Cart_product', lazy='subquery')
-    
-
-
-

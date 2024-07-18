@@ -58,9 +58,11 @@ def remove_cart_products():
         product_id = data.get('product_id')
 
         product = CartProduct.query.where(CartProduct.product_id == product_id, CartProduct.cart_id == cart_id).first()
-
+        user_cart = Cart.query.where(Cart.cart_id == cart_id).first()
         db.session.delete(product)
+        user_cart.products_amount -= 1
         db.session.commit()
+
         return jsonify({"success": True}), 200
     except Exception as error:
         print('Error', error)
@@ -87,6 +89,7 @@ def get_product_Id(products_id):
 def make_purchase(cart_id):
     try:
         cart_products = CartProduct.query.where(CartProduct.cart_id == cart_id).all()
+        user_cart = Cart.query.where(Cart.cart_id == cart_id).first()
 
         #Disminuye el stock de los productos en el carrito antes de limpiar el carrito
         for cart_product in cart_products:
@@ -98,6 +101,7 @@ def make_purchase(cart_id):
 
         #limpia el carrito
         CartProduct.query.where(CartProduct.cart_id == cart_id).delete()
+        user_cart.products_amount = 0
         db.session.commit()
 
         return jsonify({"success": True}), 200
@@ -125,12 +129,6 @@ def login():
 def register():
     
     if request.method == 'POST':
-        
-        ultimo_usuario = User.query.order_by(User.id.desc()).first()
-        if ultimo_usuario is not None:
-            cart_id = ultimo_usuario.id + 1
-        else:
-            cart_id = 1
 
         name = request.json.get("name")
         password = request.json.get("password")
@@ -152,7 +150,7 @@ def register():
         db.session.commit()
 
         cart_id = new_user.id
-        new_cart = Cart(cart_id = cart_id)
+        new_cart = Cart(cart_id = cart_id, products_amount=0)
         db.session.add(new_cart)
         db.session.commit()
 
@@ -212,6 +210,10 @@ def add_to_cart():
 
         add_product = CartProduct(product_id=product_id, cart_id=cart_id)
         db.session.add(add_product)
+        db.session.commit()
+
+        user_cart = Cart.query.where(Cart.cart_id == cart_id).first()
+        user_cart.products_amount += 1
         db.session.commit()
 
         return jsonify({"success": True}), 200
