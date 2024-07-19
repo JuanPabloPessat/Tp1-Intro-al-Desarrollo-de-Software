@@ -222,9 +222,9 @@ def add_to_cart():
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
     
-@app.route('/user/password', methods=['GET','POST'])
+@app.route('/user/password', methods=['GET','PUT'])
 def password_change():
-    if request.method == 'POST':
+    if request.method == 'PUT':
         old_password = request.json.get("old_password")
         new_password = request.json.get("password")
 
