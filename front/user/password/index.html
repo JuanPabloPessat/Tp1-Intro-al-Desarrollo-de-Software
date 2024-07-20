@@ -125,6 +125,10 @@
         }
 
         function check_user(event) {
+            let Params_string = window.location.search;
+            let Params = new URLSearchParams(Params_string);
+            let id = Params.get('id');
+
             event.preventDefault()
 
             const formData = new FormData(event.target)
@@ -132,7 +136,7 @@
             const old_password = formData.get("old_password")
             const password = formData.get("password")
 
-            fetch("http://localhost:5000/user/password", {
+            fetch(`http://localhost:5000/user/password/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"

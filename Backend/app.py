@@ -222,13 +222,13 @@ def add_to_cart():
         print('Error', error)
         return jsonify({'message': 'Internal server error'}), 500
     
-@app.route('/user/password', methods=['GET','PUT'])
-def password_change():
+@app.route('/user/password/<user_id>', methods=['GET','PUT'])
+def password_change(user_id):
     if request.method == 'PUT':
         old_password = request.json.get("old_password")
         new_password = request.json.get("password")
 
-        user = User.query.filter_by(password=old_password).first()
+        user = User.query.where(User.id == user_id).first()
 
         if user and user.password == old_password:
             user.password = new_password
