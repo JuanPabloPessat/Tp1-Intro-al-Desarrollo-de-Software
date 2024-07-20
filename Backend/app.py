@@ -236,6 +236,21 @@ def password_change(user_id):
             return jsonify({"success": True, "userId": user.id}), 200
         else:
             return jsonify({"success": False, "message": "Nombre o contraseña inválidos"}), 400
+
+@app.route('/user/name/<user_id>', methods=['GET','PUT'])
+def name_change(user_id):
+    if request.method == 'PUT':
+        old_name = request.json.get("old_name")
+        new_name = request.json.get("name")
+
+        user = User.query.where(User.id == user_id).first()
+
+        if user and user.name == old_name:
+            user.name = new_name
+            db.session.commit()
+            return jsonify({"success": True, "userId": user.id}), 200
+        else:
+            return jsonify({"success": False, "message": "Nombre o contraseña inválidos"}), 400
         
 @app.route('/user/cart/products_amount', methods=['GET','POST'])
 def get_cart_amount():
